@@ -58,8 +58,6 @@ class CastTableViewCell: UITableViewCell {
     
     func configureUI(){
         castImageView.contentMode = .scaleAspectFill
-        castImageView.backgroundColor = .red
-        castImageView.layer.cornerRadius = 6
         
         nameLabel.font = .secondary
         
@@ -72,8 +70,10 @@ class CastTableViewCell: UITableViewCell {
 
         if let profileImg = data.profile_path {
             let url = APIURL.imgURL + "\(profileImg)"
+            castImageView.kf.indicatorType = .activity
             castImageView.kf.setImage(with: URL(string: url))
             castImageView.layer.cornerRadius = 5
+            castImageView.clipsToBounds = true
         }
                 
         if let charactor = data.character, let cast_id = data.cast_id {

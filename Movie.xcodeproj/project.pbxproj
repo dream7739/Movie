@@ -25,6 +25,7 @@
 		88B1A6BC2C1710FE00E9D6A9 /* CastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */; };
 		88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */; };
 		88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BF2C17221700E9D6A9 /* Cast.swift */; };
+		88B1A6C22C172D7F00E9D6A9 /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastViewController.swift; sourceTree = "<group>"; };
 		88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewCell.swift; sourceTree = "<group>"; };
 		88B1A6BF2C17221700E9D6A9 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
+		88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */,
 				88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */,
 				88B1A6BF2C17221700E9D6A9 /* Cast.swift */,
+				88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */,
 			);
 			path = Movie;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88B1A6C22C172D7F00E9D6A9 /* OverviewTableViewCell.swift in Sources */,
 				8817AD472C16FC870016B38E /* ViewController.swift in Sources */,
 				8817AD742C1703A30016B38E /* TrendViewController.swift in Sources */,
 				8817AD762C1703E30016B38E /* TrendTableViewCell.swift in Sources */,

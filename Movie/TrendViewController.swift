@@ -147,7 +147,10 @@ extension TrendViewController : UITableViewDelegate, UITableViewDataSource {
         vc.movieName = movieName
         vc.posterImage = posterImage
         vc.backDropImage = backDropImage
+        vc.overView = data.overview
         
         navigationController?.pushViewController(vc, animated: true)
+        
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

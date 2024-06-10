@@ -16,7 +16,7 @@ enum FontType {
     var customFont: UIFont {
         switch self{
         case .primary:
-            return UIFont.systemFont(ofSize: 20, weight: .medium)
+            return UIFont.systemFont(ofSize: 19, weight: .medium)
         case .secondary:
             return UIFont.systemFont(ofSize: 17, weight: .medium)
         case .tertiary:

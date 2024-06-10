@@ -20,7 +20,7 @@ class CastViewController: UIViewController {
     
     let posterImageView = UIImageView()
     
-    let castTableView = UITableView()
+    let castTableView = UITableView(frame: .zero, style: .plain)
     
     var movieId: Int?
     
@@ -29,6 +29,8 @@ class CastViewController: UIViewController {
     var posterImage: String?
     
     var backDropImage: String?
+    
+    var overView: String?
     
     var list: [Cast] = []{
         didSet {
@@ -68,7 +70,6 @@ class CastViewController: UIViewController {
         .responseDecodable(of: CastResult.self) { response in
                 switch response.result {
                 case .success(let value):
-                    print(value)
                     self.list = value.cast
                 case .failure(let error):
                     print(error)
@@ -100,7 +101,7 @@ class CastViewController: UIViewController {
         headerView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(240)
+            make.height.equalTo(200)
         }
         
         backdropImageView.snp.makeConstraints { make in
@@ -108,14 +109,14 @@ class CastViewController: UIViewController {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().inset(30)
+            make.leading.top.equalToSuperview().inset(20)
         }
         
         posterImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.leading.equalTo(titleLabel)
-            make.width.equalTo(100)
-            make.height.equalTo(130)
+            make.width.equalTo(80)
+            make.height.equalTo(100)
         }
         
         castTableView.snp.makeConstraints { make in
@@ -127,13 +128,14 @@ class CastViewController: UIViewController {
     
     func configureUI(){
         view.backgroundColor = .white
-        
+        headerView.backgroundColor = .red
+
         titleLabel.textColor = .white
-        titleLabel.font = .systemFont(ofSize: 25, weight: .heavy)
+        titleLabel.font = .systemFont(ofSize: 22, weight: .heavy)
         titleLabel.text = movieName
         
         posterImageView.contentMode = .scaleAspectFill
-        backdropImageView.contentMode = .scaleAspectFill
+        backdropImageView.contentMode = .scaleToFill
         
         let url = APIURL.imgURL
         
@@ -150,21 +152,42 @@ class CastViewController: UIViewController {
     func configureTableView(){
         castTableView.delegate = self
         castTableView.dataSource = self
-        castTableView.rowHeight = 90
+        castTableView.register(OverviewTableViewCell.self, forCellReuseIdentifier: OverviewTableViewCell.identifier)
         castTableView.register(CastTableViewCell.self, forCellReuseIdentifier: CastTableViewCell.identifier)
     }
 }
 
 extension CastViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return UITableView.automaticDimension
+        }else{
+            return 90
+        }
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return section == 0 ? 1 : list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = list[indexPath.row]
+        if indexPath.section == 0{
+            let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier, for: indexPath) as! OverviewTableViewCell
+            cell.configureData(overView!)
+            return cell
+        }else{
+            let data = list[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: CastTableViewCell.identifier, for: indexPath) as! CastTableViewCell
+            cell.configureData(data)
+            return cell
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: CastTableViewCell.identifier, for: indexPath) as! CastTableViewCell
-        cell.configureData(data)
-        return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "OverView" : "Cast"
     }
 }

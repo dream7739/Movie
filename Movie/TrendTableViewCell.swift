@@ -59,7 +59,7 @@ class TrendTableViewCell : UITableViewCell {
         }
         
         categoryLabel.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom).offset(8)
+            make.top.equalTo(dateLabel.snp.bottom).offset(2)
             make.leading.equalTo(dateLabel)
         }
         
@@ -81,8 +81,8 @@ class TrendTableViewCell : UITableViewCell {
         
         rateStackView.snp.makeConstraints { make in
             make.leading.bottom.equalTo(moveImageView).inset(20)
-            make.width.equalTo(80)
-            make.height.equalTo(30)
+            make.width.equalTo(70)
+            make.height.equalTo(25)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -135,12 +135,12 @@ class TrendTableViewCell : UITableViewCell {
         rateStackView.axis = .horizontal
         rateStackView.distribution = .fillEqually
         
-        rateLabel.font = .secondary
+        rateLabel.font = .tertiary
         rateLabel.textAlignment = .center
         rateLabel.textColor = .white
         rateLabel.backgroundColor = .systemIndigo
         
-        rateValueLabel.font = .secondary
+        rateValueLabel.font = .tertiary
         rateValueLabel.textAlignment = .center
         rateValueLabel.backgroundColor = .white
         
