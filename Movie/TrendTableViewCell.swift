@@ -160,7 +160,7 @@ class TrendTableViewCell : UITableViewCell {
     
     func configureData(_ data: Trend){
         dateLabel.text = data.release_date
-        categoryLabel.text = "\(data.genre_ids[0])"
+//        categoryLabel.text = "\(data.genre_ids[0])"
         
         let url = APIURL.trendImgURL + "/\(data.backdrop_path)"
         moveImageView.kf.setImage(with: URL(string: url))

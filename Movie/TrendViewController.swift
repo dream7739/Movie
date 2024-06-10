@@ -14,6 +14,8 @@ class TrendViewController: UIViewController {
 
     let trendTableView = UITableView()
     
+    var genreList: [Genre] = []
+    
     var list: [Trend] = [] {
         didSet {
             trendTableView.reloadData()
@@ -23,13 +25,38 @@ class TrendViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        callTrendMovie()
+        callGenreList()
         
         configureNav()
         configureHierarchy()
         configureLayout()
         configureUI()
         configureTableView()
+    }
+    
+    func  callGenreList(){
+        let header: HTTPHeaders = [
+            "Authorization" : APIKey.trendKey,
+            "accept" : "application/json"
+        ]
+        
+        let param: Parameters = ["language" : "ko-kr"]
+        
+        AF.request(APIURL.trendGenreURL,
+                   method: .get,
+                   parameters: param,
+                   encoding: URLEncoding.queryString,
+                   headers: header)
+        .responseDecodable(of: GenreResult.self) { response in
+            switch response.result {
+            case .success(let value):
+                print(value)
+                self.genreList = value.genres
+                self.callTrendMovie()
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func callTrendMovie(){
@@ -100,7 +127,12 @@ extension TrendViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: indexPath) as! TrendTableViewCell
-        cell.configureData(list[indexPath.row])
+        
+        let data = list[indexPath.row]
+        cell.configureData(data)
+        
+        let genre = genreList.filter{ $0.id == data.genre_ids[0] }.map{ $0.name }.first
+        cell.categoryLabel.text = "# \(genre ?? "")"
         return cell
     }
 }

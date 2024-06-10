@@ -22,3 +22,12 @@ struct Trend: Decodable {
     let release_date: String
     let vote_average: Double
 }
+
+struct GenreResult: Decodable {
+    let genres: [Genre]
+}
+
+struct Genre: Decodable {
+    let id: Int
+    let name: String
+}
