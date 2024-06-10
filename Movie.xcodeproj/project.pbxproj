@@ -16,6 +16,12 @@
 		8817AD5B2C16FD0F0016B38E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8817AD5A2C16FD0F0016B38E /* Alamofire */; };
 		8817AD5E2C16FD1E0016B38E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8817AD5D2C16FD1E0016B38E /* Kingfisher */; };
 		8817AD622C16FDF60016B38E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8817AD612C16FDF60016B38E /* .gitignore */; };
+		8817AD642C16FE540016B38E /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD632C16FE540016B38E /* APIKey.swift */; };
+		8817AD682C16FE860016B38E /* Trend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD672C16FE860016B38E /* Trend.swift */; };
+		8817AD702C16FFB80016B38E /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD6F2C16FFB80016B38E /* ReusableProtocol.swift */; };
+		8817AD722C17035F0016B38E /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD712C17035F0016B38E /* UIFont+Extension.swift */; };
+		8817AD742C1703A30016B38E /* TrendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD732C1703A30016B38E /* TrendViewController.swift */; };
+		8817AD762C1703E30016B38E /* TrendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD752C1703E30016B38E /* TrendTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +33,12 @@
 		8817AD4E2C16FC880016B38E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8817AD502C16FC880016B38E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8817AD612C16FDF60016B38E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		8817AD632C16FE540016B38E /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		8817AD672C16FE860016B38E /* Trend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trend.swift; sourceTree = "<group>"; };
+		8817AD6F2C16FFB80016B38E /* ReusableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
+		8817AD712C17035F0016B38E /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		8817AD732C1703A30016B38E /* TrendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendViewController.swift; sourceTree = "<group>"; };
+		8817AD752C1703E30016B38E /* TrendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,12 +75,18 @@
 		8817AD412C16FC870016B38E /* Movie */ = {
 			isa = PBXGroup;
 			children = (
+				8817AD6F2C16FFB80016B38E /* ReusableProtocol.swift */,
+				8817AD672C16FE860016B38E /* Trend.swift */,
+				8817AD632C16FE540016B38E /* APIKey.swift */,
 				8817AD422C16FC870016B38E /* AppDelegate.swift */,
 				8817AD442C16FC870016B38E /* SceneDelegate.swift */,
 				8817AD462C16FC870016B38E /* ViewController.swift */,
 				8817AD4B2C16FC880016B38E /* Assets.xcassets */,
 				8817AD4D2C16FC880016B38E /* LaunchScreen.storyboard */,
 				8817AD502C16FC880016B38E /* Info.plist */,
+				8817AD712C17035F0016B38E /* UIFont+Extension.swift */,
+				8817AD732C1703A30016B38E /* TrendViewController.swift */,
+				8817AD752C1703E30016B38E /* TrendTableViewCell.swift */,
 			);
 			path = Movie;
 			sourceTree = "<group>";
@@ -155,8 +173,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8817AD472C16FC870016B38E /* ViewController.swift in Sources */,
+				8817AD742C1703A30016B38E /* TrendViewController.swift in Sources */,
+				8817AD762C1703E30016B38E /* TrendTableViewCell.swift in Sources */,
 				8817AD432C16FC870016B38E /* AppDelegate.swift in Sources */,
+				8817AD642C16FE540016B38E /* APIKey.swift in Sources */,
 				8817AD452C16FC870016B38E /* SceneDelegate.swift in Sources */,
+				8817AD722C17035F0016B38E /* UIFont+Extension.swift in Sources */,
+				8817AD682C16FE860016B38E /* Trend.swift in Sources */,
+				8817AD702C16FFB80016B38E /* ReusableProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +328,6 @@
 				INFOPLIST_FILE = Movie/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -336,7 +359,6 @@
 				INFOPLIST_FILE = Movie/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
