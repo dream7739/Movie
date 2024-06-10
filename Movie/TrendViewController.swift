@@ -42,7 +42,7 @@ class TrendViewController: UIViewController {
         
         let param: Parameters = ["language" : "ko-kr"]
         
-        AF.request(APIURL.trendGenreURL,
+        AF.request(APIURL.genreURL,
                    method: .get,
                    parameters: param,
                    encoding: URLEncoding.queryString,
@@ -50,7 +50,6 @@ class TrendViewController: UIViewController {
         .responseDecodable(of: GenreResult.self) { response in
             switch response.result {
             case .success(let value):
-                print(value)
                 self.genreList = value.genres
                 self.callTrendMovie()
             case .failure(let error):
@@ -134,5 +133,21 @@ extension TrendViewController : UITableViewDelegate, UITableViewDataSource {
         let genre = genreList.filter{ $0.id == data.genre_ids[0] }.map{ $0.name }.first
         cell.categoryLabel.text = "# \(genre ?? "")"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = list[indexPath.row]
+        let movieId = data.id
+        let movieName = data.title
+        let posterImage = data.poster_path
+        let backDropImage = data.backdrop_path
+
+        let vc = CastViewController()
+        vc.movieId = movieId
+        vc.movieName = movieName
+        vc.posterImage = posterImage
+        vc.backDropImage = backDropImage
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
