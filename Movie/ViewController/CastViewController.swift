@@ -32,6 +32,8 @@ class CastViewController: UIViewController {
     
     var overView: String?
     
+    var isOpened = false
+    
     var list: [Cast] = []{
         didSet {
             castTableView.reloadData()
@@ -129,7 +131,6 @@ class CastViewController: UIViewController {
     
     func configureUI(){
         view.backgroundColor = .white
-        headerView.backgroundColor = .red
 
         titleLabel.textColor = .white
         titleLabel.font = .systemFont(ofSize: 22, weight: .heavy)
@@ -178,6 +179,15 @@ extension CastViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier, for: indexPath) as! OverviewTableViewCell
             cell.configureData(overView!)
+            
+            if isOpened{
+                cell.overviewLabel.numberOfLines = 0
+                cell.openImageView.image = UIImage(systemName: "chevron.up")
+            }else{
+                cell.overviewLabel.numberOfLines = 2
+                cell.openImageView.image = UIImage(systemName: "chevron.down")
+            }
+            
             return cell
         }else{
             let data = list[indexPath.row]
@@ -190,5 +200,12 @@ extension CastViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return section == 0 ? "OverView" : "Cast"
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath == IndexPath(row: 0, section: 0){
+            isOpened.toggle()
+            tableView.reloadRows(at: [indexPath], with: .fade)
+        }
     }
 }

@@ -12,6 +12,8 @@ class OverviewTableViewCell: UITableViewCell {
     
     let overviewLabel = UILabel()
     
+    let openImageView = UIImageView()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureHierarchy()
@@ -25,19 +27,30 @@ class OverviewTableViewCell: UITableViewCell {
     
     func configureHierarchy(){
         contentView.addSubview(overviewLabel)
+        contentView.addSubview(openImageView)
     }
     
     func configureLayout(){
         overviewLabel.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview().inset(12)
+            make.top.equalToSuperview().inset(12)
+            make.bottom.equalToSuperview().inset(30)
             make.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        openImageView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(4)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(20)
         }
         
     }
     
     func configureUI(){
         overviewLabel.font = .tertiary
-        overviewLabel.numberOfLines = 0
+        overviewLabel.numberOfLines = 2
+        
+        openImageView.image = UIImage(systemName: "chevron.down")
+        openImageView.tintColor = .black
     }
     
     func configureData(_ data: String){
