@@ -74,7 +74,8 @@ class SearchViewController: UIViewController {
     
     
     func callSearch(_ query: String){
-        let url = APIURL.searchURL + "?query=\(query)&languare=ko-kr&page=\(page)"
+        print(#function)
+        let url = APIURL.searchURL + "?query=\(query)&language=ko-kr&page=\(page)"
         
         let header: HTTPHeaders = [
             "Authorization" : APIKey.trendKey,
@@ -87,7 +88,6 @@ class SearchViewController: UIViewController {
         .responseDecodable(of: SearchResult.self) { response in
             switch response.result {
             case .success(let value):
-                print(value)
                                     
                 if self.page == 1 {
                     self.list = value
@@ -138,9 +138,19 @@ extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataS
 
 extension SearchViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        query = searchBar.text!
-        page = 1
-        callSearch(query)
+        //아무 텍스트 없이 검색 버튼 클릭 > 호출 안됨
+        //공백만 있게 검색 버튼 클릭 > 호출 / 공백 포함되면 검색결과 달라지는 경우 있음
+        //동일한 검색어 > 서버통신 이루어지도록 막기
+        
+        searchBar.resignFirstResponder()
+        
+        let input = searchBar.text!.trimmingCharacters(in: .whitespaces)
+        
+        if !input.isEmpty && !(input.caseInsensitiveCompare(query) == .orderedSame) {
+            query = input
+            page = 1
+            callSearch(query)
+        }
     }
 
 }
