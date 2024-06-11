@@ -88,6 +88,7 @@ class TrendViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = list
         navigationItem.rightBarButtonItem = search
+        navigationController?.navigationBar.tintColor = .black
     }
     
     @objc func listButtonClicked(){ }

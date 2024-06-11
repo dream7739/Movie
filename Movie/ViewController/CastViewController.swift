@@ -80,6 +80,7 @@ class CastViewController: UIViewController {
     func configureNav(){
         let back = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonClicked))
         navigationItem.leftBarButtonItem = back
+        
         navigationController?.navigationBar.tintColor = .black
         navigationItem.title = "출연/제작"
     }

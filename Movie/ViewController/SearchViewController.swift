@@ -18,6 +18,12 @@ class SearchViewController: UIViewController {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     
+    let emptyView = UIView()
+    
+    let announceLabel = UILabel()
+    
+    let subAnnounceLabel = UILabel()
+    
     var list = SearchResult(page: 1, results: [], total_pages: 0, total_results: 0)
     
     var page = 1
@@ -48,6 +54,10 @@ class SearchViewController: UIViewController {
         view.addSubview(searchBar)
         view.addSubview(backButton)
         view.addSubview(collectionView)
+        
+        view.addSubview(emptyView)
+        emptyView.addSubview(announceLabel)
+        emptyView.addSubview(subAnnounceLabel)
     }
     
     func configureLayout(){
@@ -67,6 +77,23 @@ class SearchViewController: UIViewController {
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(searchBar.snp.bottom)
         }
+        
+        emptyView.snp.makeConstraints { make in
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(searchBar.snp.bottom)
+        }
+        
+        announceLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview().multipliedBy(0.4)
+            make.centerX.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        subAnnounceLabel.snp.makeConstraints { make in
+            make.top.equalTo(announceLabel.snp.bottom).offset(4)
+            make.centerX.equalToSuperview()
+            make.horizontalEdges.equalTo(announceLabel)
+        }
     }
     
     func configureUI(){
@@ -85,6 +112,17 @@ class SearchViewController: UIViewController {
         backButton.addTarget(self, action: #selector(backButtonClicked), for: .touchUpInside)
         backButton.tintColor = .black
         backButton.setImage(.back, for: .normal)
+        
+        emptyView.isHidden = true
+        announceLabel.text = "이런! 찾으시는 작품이 없습니다."
+        announceLabel.font = .systemFont(ofSize: 24, weight: .heavy)
+        announceLabel.textAlignment = .center
+        
+        subAnnounceLabel.text = "다른 영화를 검색해보세요"
+        subAnnounceLabel.font = .secondary
+        subAnnounceLabel.textColor = .gray
+        subAnnounceLabel.textAlignment = .center
+
     }
     
     @objc func backButtonClicked(){
@@ -114,7 +152,7 @@ class SearchViewController: UIViewController {
         .responseDecodable(of: SearchResult.self) { response in
             switch response.result {
             case .success(let value):
-                                    
+                
                 if self.page == 1 {
                     self.list = value
                 }else{
@@ -127,6 +165,13 @@ class SearchViewController: UIViewController {
                 //검색 결과가 없는 경우에는 scrollToItem되지 않도록 함
                 if self.page == 1 && self.list.results.count != 0{
                     self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
+                
+                //결과가 없는 경우에 emptyView 보이도록 지정
+                if self.list.results.count == 0 {
+                    self.emptyView.isHidden = false
+                }else{
+                    self.emptyView.isHidden = true
                 }
                 
             case .failure(let error):
