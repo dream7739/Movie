@@ -92,7 +92,11 @@ class TrendViewController: UIViewController {
     
     @objc func listButtonClicked(){ }
     
-    @objc func searchButtonClicked(){ }
+    @objc func searchButtonClicked(){
+        let vc = SearchViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     
     func configureHierarchy(){
         view.addSubview(trendTableView)

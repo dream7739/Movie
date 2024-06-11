@@ -22,6 +22,9 @@
 		8817AD722C17035F0016B38E /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD712C17035F0016B38E /* UIFont+Extension.swift */; };
 		8817AD742C1703A30016B38E /* TrendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD732C1703A30016B38E /* TrendViewController.swift */; };
 		8817AD762C1703E30016B38E /* TrendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD752C1703E30016B38E /* TrendTableViewCell.swift */; };
+		88576EDA2C183C6D00352EE1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88576ED92C183C6D00352EE1 /* SearchViewController.swift */; };
+		88576EDC2C18403100352EE1 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88576EDB2C18403100352EE1 /* SearchCollectionViewCell.swift */; };
+		88576EE42C1842B300352EE1 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88576EE32C1842B300352EE1 /* Search.swift */; };
 		88B1A6BC2C1710FE00E9D6A9 /* CastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */; };
 		88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */; };
 		88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BF2C17221700E9D6A9 /* Cast.swift */; };
@@ -43,6 +46,9 @@
 		8817AD712C17035F0016B38E /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		8817AD732C1703A30016B38E /* TrendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendViewController.swift; sourceTree = "<group>"; };
 		8817AD752C1703E30016B38E /* TrendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendTableViewCell.swift; sourceTree = "<group>"; };
+		88576ED92C183C6D00352EE1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		88576EDB2C18403100352EE1 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		88576EE32C1842B300352EE1 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastViewController.swift; sourceTree = "<group>"; };
 		88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewCell.swift; sourceTree = "<group>"; };
 		88B1A6BF2C17221700E9D6A9 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
@@ -83,8 +89,11 @@
 		8817AD412C16FC870016B38E /* Movie */ = {
 			isa = PBXGroup;
 			children = (
-				8817AD6F2C16FFB80016B38E /* ReusableProtocol.swift */,
-				8817AD672C16FE860016B38E /* Trend.swift */,
+				88576EE22C18429E00352EE1 /* Cell */,
+				88576EE12C18428A00352EE1 /* Extension */,
+				88576EDF2C18427300352EE1 /* Protocol */,
+				88576EDE2C18426F00352EE1 /* Model */,
+				88576EDD2C18425400352EE1 /* ViewController */,
 				8817AD632C16FE540016B38E /* APIKey.swift */,
 				8817AD422C16FC870016B38E /* AppDelegate.swift */,
 				8817AD442C16FC870016B38E /* SceneDelegate.swift */,
@@ -92,15 +101,55 @@
 				8817AD4B2C16FC880016B38E /* Assets.xcassets */,
 				8817AD4D2C16FC880016B38E /* LaunchScreen.storyboard */,
 				8817AD502C16FC880016B38E /* Info.plist */,
-				8817AD712C17035F0016B38E /* UIFont+Extension.swift */,
-				8817AD732C1703A30016B38E /* TrendViewController.swift */,
-				8817AD752C1703E30016B38E /* TrendTableViewCell.swift */,
-				88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */,
-				88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */,
 				88B1A6BF2C17221700E9D6A9 /* Cast.swift */,
-				88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */,
 			);
 			path = Movie;
+			sourceTree = "<group>";
+		};
+		88576EDD2C18425400352EE1 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				88576ED92C183C6D00352EE1 /* SearchViewController.swift */,
+				88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */,
+				8817AD732C1703A30016B38E /* TrendViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		88576EDE2C18426F00352EE1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8817AD672C16FE860016B38E /* Trend.swift */,
+				88576EE32C1842B300352EE1 /* Search.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		88576EDF2C18427300352EE1 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				8817AD6F2C16FFB80016B38E /* ReusableProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		88576EE12C18428A00352EE1 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				8817AD752C1703E30016B38E /* TrendTableViewCell.swift */,
+				88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */,
+				88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */,
+				88576EDB2C18403100352EE1 /* SearchCollectionViewCell.swift */,
+				8817AD712C17035F0016B38E /* UIFont+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		88576EE22C18429E00352EE1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,11 +241,14 @@
 				88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */,
 				8817AD432C16FC870016B38E /* AppDelegate.swift in Sources */,
 				8817AD642C16FE540016B38E /* APIKey.swift in Sources */,
+				88576EDA2C183C6D00352EE1 /* SearchViewController.swift in Sources */,
 				88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */,
 				8817AD452C16FC870016B38E /* SceneDelegate.swift in Sources */,
 				8817AD722C17035F0016B38E /* UIFont+Extension.swift in Sources */,
 				8817AD682C16FE860016B38E /* Trend.swift in Sources */,
+				88576EE42C1842B300352EE1 /* Search.swift in Sources */,
 				8817AD702C16FFB80016B38E /* ReusableProtocol.swift in Sources */,
+				88576EDC2C18403100352EE1 /* SearchCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
