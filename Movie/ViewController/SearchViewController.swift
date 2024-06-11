@@ -14,6 +14,8 @@ class SearchViewController: UIViewController {
     
     let searchBar = UISearchBar()
     
+    let backButton = UIButton(type: .system)
+    
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     
     var list = SearchResult(page: 1, results: [], total_pages: 0, total_results: 0)
@@ -44,13 +46,21 @@ class SearchViewController: UIViewController {
     
     func configureHierarchy(){
         view.addSubview(searchBar)
+        view.addSubview(backButton)
         view.addSubview(collectionView)
     }
     
     func configureLayout(){
         searchBar.snp.makeConstraints { make in
-            make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(backButton.snp.trailing)
             make.height.equalTo(44)
+        }
+        
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.size.equalTo(44)
         }
         
         collectionView.snp.makeConstraints { make in
@@ -70,12 +80,28 @@ class SearchViewController: UIViewController {
         searchBar.delegate = self
         searchBar.placeholder = "영화를 검색하세요"
         searchBar.tintColor = .black
+        searchBar.searchBarStyle = .minimal
+        
+        backButton.addTarget(self, action: #selector(backButtonClicked), for: .touchUpInside)
+        backButton.tintColor = .black
+        backButton.setImage(.back, for: .normal)
     }
     
+    @objc func backButtonClicked(){
+        dismiss(animated: true)
+    }
     
     func callSearch(_ query: String){
         print(#function)
-        let url = APIURL.searchURL + "?query=\(query)&language=ko-kr&page=\(page)"
+        
+        var component = URLComponents(string: APIURL.searchURL)
+        let query = URLQueryItem(name: "query", value: "\(query)")
+        let lang = URLQueryItem(name: "language", value: "ko-kr")
+        let page = URLQueryItem(name: "page", value: "\(page)")
+        
+        component?.queryItems = [query, lang, page]
+        
+        guard let url = component?.url else { return }
         
         let header: HTTPHeaders = [
             "Authorization" : APIKey.trendKey,
@@ -108,6 +134,7 @@ class SearchViewController: UIViewController {
             }
         }
     }
+    
   
 }
 
@@ -119,6 +146,15 @@ extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataS
                 page += 1
                 callSearch(query)
             }
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        
+        for idx in indexPaths {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: idx) as! SearchCollectionViewCell
+            cell.cancelDownload()
         }
     }
     

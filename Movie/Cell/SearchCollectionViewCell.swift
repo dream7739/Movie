@@ -26,6 +26,12 @@ class SearchCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        posterImageView.image = UIImage()
+        posterImageView.backgroundColor = .white
+        titleLabel.text = ""
+    }
+    
     func configureHierarchy(){
         contentView.addSubview(posterImageView)
         contentView.addSubview(titleLabel)
@@ -67,10 +73,9 @@ class SearchCollectionViewCell: UICollectionViewCell {
         
     }
     
-    override func prepareForReuse() {
-        posterImageView.image = UIImage()
-        posterImageView.backgroundColor = .white
-        titleLabel.text = ""        
+    func cancelDownload(){
+        print(#function)
+        posterImageView.kf.cancelDownloadTask()
     }
-
+    
 }

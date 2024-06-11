@@ -29,6 +29,7 @@
 		88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */; };
 		88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BF2C17221700E9D6A9 /* Cast.swift */; };
 		88B1A6C22C172D7F00E9D6A9 /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */; };
+		88CD44ED2C18839B002E60A0 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CD44EC2C18839B002E60A0 /* UIImage+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewCell.swift; sourceTree = "<group>"; };
 		88B1A6BF2C17221700E9D6A9 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
 		88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
+		88CD44EC2C18839B002E60A0 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				8817AD712C17035F0016B38E /* UIFont+Extension.swift */,
+				88CD44EC2C18839B002E60A0 /* UIImage+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */,
 				8817AD452C16FC870016B38E /* SceneDelegate.swift in Sources */,
 				8817AD722C17035F0016B38E /* UIFont+Extension.swift in Sources */,
+				88CD44ED2C18839B002E60A0 /* UIImage+Extension.swift in Sources */,
 				8817AD682C16FE860016B38E /* Trend.swift in Sources */,
 				88576EE42C1842B300352EE1 /* Search.swift in Sources */,
 				8817AD702C16FFB80016B38E /* ReusableProtocol.swift in Sources */,
