@@ -16,10 +16,16 @@ class SearchViewController: UIViewController {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     
+    var list = SearchResult(page: 1, results: [], total_pages: 0, total_results: 0)
+    
+    var page = 1
+    
+    var query = "애니"
+    
     func collectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let width = (UIScreen.main.bounds.width - 40) / 3
-        let height = (UIScreen.main.bounds.height - 50) / 4
+        let height = (UIScreen.main.bounds.height - 100) / 4
         layout.itemSize = CGSize(width: width, height: height)
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
@@ -33,7 +39,7 @@ class SearchViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureUI()
-        configureCollectionView()
+        callSearch(query)
     }
     
     func configureHierarchy(){
@@ -55,29 +61,86 @@ class SearchViewController: UIViewController {
     
     func configureUI(){
         view.backgroundColor = .white
-        collectionView.backgroundColor = .green
-    }
-    
-    func configureCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
         collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
+        collectionView.keyboardDismissMode = .onDrag
+        
+        searchBar.delegate = self
+        searchBar.placeholder = "영화를 검색하세요"
+        searchBar.tintColor = .black
+    }
+    
+    
+    func callSearch(_ query: String){
+        let url = APIURL.searchURL + "?query=\(query)&languare=ko-kr&page=\(page)"
+        
+        let header: HTTPHeaders = [
+            "Authorization" : APIKey.trendKey,
+            "accept": "application/json"]
+        
+        AF.request(url,
+                   method: .get,
+                   headers: header
+                   )
+        .responseDecodable(of: SearchResult.self) { response in
+            switch response.result {
+            case .success(let value):
+                print(value)
+                                    
+                if self.page == 1 {
+                    self.list = value
+                }else{
+                    self.list.results.append(contentsOf: value.results)
+                }
+                
+                self.collectionView.reloadData()
+                
+                //검색 결과가 없는 경우에는 result = []
+                //검색 결과가 없는 경우에는 scrollToItem되지 않도록 함
+                if self.page == 1 && self.list.results.count != 0{
+                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
   
 }
 
 extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print("Hi")
+        
+        for idx in indexPaths {
+            if list.results.count - 2 == idx.row && page <= list.total_pages{
+                page += 1
+                callSearch(query)
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return list.results.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as! SearchCollectionViewCell
+        
+        let data = list.results[indexPath.row]
+        
+        cell.configureData(data)
         return cell
     }
+}
+
+extension SearchViewController : UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        query = searchBar.text!
+        page = 1
+        callSearch(query)
+    }
+
 }

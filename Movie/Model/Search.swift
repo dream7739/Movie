@@ -9,11 +9,12 @@ import Foundation
 
 struct SearchResult: Decodable {
     let page: Int
-    let result: [Search]
+    var results: [Search]
+    let total_pages: Int
+    let total_results: Int
 }
 
 struct Search: Decodable {
-    let poster_path: String
-    let release_date: String
-    vote_average
+    let poster_path: String?
+    let title: String?
 }

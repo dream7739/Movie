@@ -136,10 +136,6 @@
 		88576EE12C18428A00352EE1 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				8817AD752C1703E30016B38E /* TrendTableViewCell.swift */,
-				88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */,
-				88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */,
-				88576EDB2C18403100352EE1 /* SearchCollectionViewCell.swift */,
 				8817AD712C17035F0016B38E /* UIFont+Extension.swift */,
 			);
 			path = Extension;
@@ -148,6 +144,10 @@
 		88576EE22C18429E00352EE1 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				8817AD752C1703E30016B38E /* TrendTableViewCell.swift */,
+				88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */,
+				88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */,
+				88576EDB2C18403100352EE1 /* SearchCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
