@@ -67,19 +67,16 @@ class CastTableViewCell: UITableViewCell {
     
     func configureData(_ data: Cast){
         nameLabel.text = data.original_name
-
-        if let profileImg = data.profile_path {
-            let url = APIURL.imgURL + "\(profileImg)"
+        
+        if let url = data.profileURL {
             castImageView.kf.indicatorType = .activity
-            castImageView.kf.setImage(with: URL(string: url))
+            castImageView.kf.setImage(with: url)
             castImageView.layer.cornerRadius = 5
             castImageView.clipsToBounds = true
         }else{
             castImageView.backgroundColor = Constant.Color.empty
         }
-                
-        if let charactor = data.character, let cast_id = data.cast_id {
-            descriptionLabel.text = charactor + " / " + "No.\(cast_id)"
-        }
+       
+        descriptionLabel.text = data.description
     }
 }
