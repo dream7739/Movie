@@ -17,4 +17,13 @@ struct SearchResult: Decodable {
 struct Search: Decodable {
     let poster_path: String?
     let title: String?
+    
+    var posterURL: URL? {
+        guard let path = poster_path,
+              let url = URL(string: APIURL.imgURL + "/\(path)")else{
+            return nil
+        }
+        
+        return url
+    }
 }

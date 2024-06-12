@@ -61,16 +61,13 @@ class SearchCollectionViewCell: UICollectionViewCell {
     }
     
     func configureData(_ data: Search){
-    
-        if let poster = data.poster_path {
-            let url = URL(string: APIURL.imgURL + poster)
+        if let url = data.posterURL {
             posterImageView.kf.indicatorType = .activity
             posterImageView.kf.setImage(with: url)
         }else{
             posterImageView.backgroundColor = Constant.Color.empty
             titleLabel.text = data.title ?? "No Title"
         }
-        
     }
     
     func cancelDownload(){
