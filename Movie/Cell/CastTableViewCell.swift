@@ -74,6 +74,8 @@ class CastTableViewCell: UITableViewCell {
             castImageView.kf.setImage(with: URL(string: url))
             castImageView.layer.cornerRadius = 5
             castImageView.clipsToBounds = true
+        }else{
+            castImageView.backgroundColor = Constant.Color.empty
         }
                 
         if let charactor = data.character, let cast_id = data.cast_id {

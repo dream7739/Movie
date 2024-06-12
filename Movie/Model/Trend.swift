@@ -31,6 +31,15 @@ struct Trend: Decodable {
         return url
     }
     
+    var posterURL: URL? {
+        guard let path = poster_path,
+              let url = URL(string: APIURL.imgURL + "/\(path)")else{
+            return nil
+        }
+        
+        return url
+    }
+    
     var rateDescription: String {
         return String(format: "%.1f", vote_average)
     }
@@ -49,6 +58,7 @@ struct Trend: Decodable {
 
 struct GenreResult: Decodable {
     let genres: [Genre]
+    static var genreList : [Genre] = []
 }
 
 struct Genre: Decodable {

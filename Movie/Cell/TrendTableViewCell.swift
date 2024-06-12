@@ -118,7 +118,7 @@ class TrendTableViewCell : UITableViewCell {
         dateLabel.textColor = .lightGray
         dateLabel.font = Constant.Font.tertiary
         
-        categoryLabel.font = Constant.Font.primary
+        categoryLabel.font = Constant.Font.secondary
         
         shadowView.backgroundColor = .clear
         shadowView.layer.shadowColor = UIColor.black.cgColor
@@ -175,7 +175,22 @@ class TrendTableViewCell : UITableViewCell {
         
         descriptionLabel.text = data.overview
         
+        categoryLabel.text = getGenre(data.genre_ids)
         
+    }
+    
+    private func getGenre(_ genreIds: [Int]) -> String {
+        var genre = ""
+        var filteredGenre: [String] = []
+        
+        for id in genreIds {
+            filteredGenre += GenreResult.genreList.filter{ $0.id == id}.map{ $0.name }
+        }
+        
+        for name in filteredGenre {
+            genre += "# \(name) "
+        }
+        return genre
     }
 
 }

@@ -10,6 +10,15 @@ import Alamofire
 import Kingfisher
 import SnapKit
 
+enum Section: Int, CaseIterable {
+    case OverView = 0
+    case Cast = 1
+    
+    var title: String {
+       return "\(self)"
+    }
+}
+
 class CastViewController: UIViewController {
     
     let headerView = UIView()
@@ -22,23 +31,15 @@ class CastViewController: UIViewController {
     
     let castTableView = UITableView(frame: .zero, style: .plain)
     
-    var movieId: Int?
-    
-    var movieName: String?
-    
-    var posterImage: String?
-    
-    var backDropImage: String?
-    
-    var overView: String?
-    
-    var isOpened = false
+    var trend: Trend?
     
     var list: [Cast] = []{
         didSet {
             castTableView.reloadData()
         }
     }
+    
+    var isOpened = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,20 +55,17 @@ class CastViewController: UIViewController {
     
     func callCast(){
         
+        guard let trend else { return }
+        
         let header: HTTPHeaders = [
             "Authorization" : APIKey.trendKey,
             "accept" : "application/json"
         ]
-        
-        let param: Parameters = ["language" : "ko-kr"]
 
-        
-        let url = APIURL.castURL + "/\(movieId!)/credits"
+        let url = APIURL.castURL + "/\(trend.id)/credits?language=ko-kr"
         
         AF.request(url,
                    method: .get,
-                   parameters: param,
-                   encoding: URLEncoding.queryString,
                    headers: header)
         .responseDecodable(of: CastResult.self) { response in
                 switch response.result {
@@ -130,23 +128,29 @@ class CastViewController: UIViewController {
     }
     
     func configureUI(){
+        guard let trend else { return }
+        
         view.backgroundColor = .white
 
         titleLabel.textColor = .white
         titleLabel.font = Constant.Font.heavy
-        titleLabel.text = movieName
+        titleLabel.text = trend.title
         
         posterImageView.contentMode = .scaleAspectFill
+        
         backdropImageView.contentMode = .scaleToFill
+        backdropImageView.clipsToBounds = true
         
-        let url = APIURL.imgURL
-        
-        if let posterImage {
-            posterImageView.kf.setImage(with: URL(string: url+"/\(posterImage)"))
+        if let url = trend.posterURL {
+            posterImageView.kf.setImage(with: url)
+        }else{
+            posterImageView.backgroundColor = Constant.Color.empty
         }
         
-        if let backDropImage {
-            backdropImageView.kf.setImage(with: URL(string: url+"/\(backDropImage)"))
+        if let url = trend.backDropURL {
+            backdropImageView.kf.setImage(with: url)
+        }else{
+            backdropImageView.backgroundColor = Constant.Color.empty
         }
         
     }
@@ -167,6 +171,7 @@ extension CastViewController: UITableViewDelegate, UITableViewDataSource {
             return 90
         }
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -178,7 +183,10 @@ extension CastViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier, for: indexPath) as! OverviewTableViewCell
-            cell.configureData(overView!)
+            
+            if let overview = trend?.overview {
+                cell.configureData(overview)
+            }
             
             if isOpened{
                 cell.overviewLabel.numberOfLines = 0
@@ -199,7 +207,7 @@ extension CastViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "OverView" : "Cast"
+        return Section.allCases[section].title
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

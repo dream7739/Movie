@@ -67,7 +67,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
             posterImageView.kf.indicatorType = .activity
             posterImageView.kf.setImage(with: url)
         }else{
-            posterImageView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+            posterImageView.backgroundColor = Constant.Color.empty
             titleLabel.text = data.title ?? "No Title"
         }
         
