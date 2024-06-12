@@ -28,4 +28,8 @@ enum Constant {
         static let list = UIImage(systemName: "list.bullet")!
         static let search = UIImage(systemName: "magnifyingglass")!
     }
+    
+    enum Color {
+        static let empty = UIColor.black.withAlphaComponent(0.5)
+    }
 }

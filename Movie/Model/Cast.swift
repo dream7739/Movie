@@ -18,4 +18,6 @@ struct Cast: Decodable {
     let cast_id: Int?
     let character: String?
     let profile_path: String?
+    
+    var profileImgURl: URL?
 }

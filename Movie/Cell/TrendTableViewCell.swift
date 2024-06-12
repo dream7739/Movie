@@ -59,14 +59,14 @@ class TrendTableViewCell : UITableViewCell {
         }
         
         categoryLabel.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom).offset(2)
+            make.top.equalTo(dateLabel.snp.bottom).offset(4)
             make.leading.equalTo(dateLabel)
         }
         
         shadowView.snp.makeConstraints { make in
-             make.top.equalTo(categoryLabel.snp.bottom).offset(8)
+             make.top.equalTo(categoryLabel.snp.bottom).offset(12)
              make.horizontalEdges.equalToSuperview().inset(20)
-             make.height.equalTo(340)
+             make.height.equalTo(400)
         }
         
         trendView.snp.makeConstraints { make in
@@ -76,7 +76,7 @@ class TrendTableViewCell : UITableViewCell {
         moveImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(200)
+            make.height.equalTo(250)
         }
         
         rateStackView.snp.makeConstraints { make in
@@ -122,8 +122,8 @@ class TrendTableViewCell : UITableViewCell {
         
         shadowView.backgroundColor = .clear
         shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowRadius = 10
-        shadowView.layer.shadowOpacity = 0.6
+        shadowView.layer.shadowRadius = 5
+        shadowView.layer.shadowOpacity = 0.3
         shadowView.layer.shadowOffset = CGSize(width: 3, height: 5)
         
         trendView.backgroundColor = .white
@@ -159,14 +159,17 @@ class TrendTableViewCell : UITableViewCell {
     }
     
     func configureData(_ data: Trend){
-        dateLabel.text = data.release_date
+        dateLabel.text = data.dateDescription
         
-        let url = APIURL.imgURL + "/\(data.backdrop_path)"
-        moveImageView.kf.setImage(with: URL(string: url))
+        if let url = data.backDropURL{
+            moveImageView.kf.setImage(with: url)
+        }else{
+            moveImageView.backgroundColor = Constant.Color.empty
+        }
         
         rateLabel.text = "평점"
         
-        rateValueLabel.text = String(format: "%.1f", data.vote_average)
+        rateValueLabel.text = data.rateDescription
         
         titleLabel.text = data.title
         

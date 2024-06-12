@@ -12,15 +12,39 @@ struct TrendResult: Decodable {
 }
     
 struct Trend: Decodable {
-    let backdrop_path: String
+    let backdrop_path: String?
     let id: Int
     let original_title: String
     let overview: String
-    let poster_path: String
+    let poster_path: String?
     let title: String
     let genre_ids: [Int]
     let release_date: String
     let vote_average: Double
+    
+    var backDropURL: URL? {
+        guard let path = backdrop_path,
+              let url = URL(string: APIURL.imgURL + "/\(path)")else{
+            return nil
+        }
+        
+        return url
+    }
+    
+    var rateDescription: String {
+        return String(format: "%.1f", vote_average)
+    }
+    
+    var dateDescription: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let date = formatter.date(from: release_date)
+        
+        formatter.dateFormat = "yyyy년 MM월 dd일"
+        let dateString = formatter.string(from: date!)
+        return dateString
+    }
+    
 }
 
 struct GenreResult: Decodable {

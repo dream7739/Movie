@@ -116,7 +116,7 @@ class TrendViewController: UIViewController {
     func configureTableView(){
         trendTableView.delegate = self
         trendTableView.dataSource = self
-        trendTableView.rowHeight = 430
+        trendTableView.rowHeight = 480
         trendTableView.separatorStyle = .none
         
         trendTableView.register(TrendTableViewCell.self, forCellReuseIdentifier: TrendTableViewCell.identifier)

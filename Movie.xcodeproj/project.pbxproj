@@ -102,7 +102,6 @@
 				8817AD4B2C16FC880016B38E /* Assets.xcassets */,
 				8817AD4D2C16FC880016B38E /* LaunchScreen.storyboard */,
 				8817AD502C16FC880016B38E /* Info.plist */,
-				88B1A6BF2C17221700E9D6A9 /* Cast.swift */,
 			);
 			path = Movie;
 			sourceTree = "<group>";
@@ -128,6 +127,7 @@
 		88576EDE2C18426F00352EE1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				88B1A6BF2C17221700E9D6A9 /* Cast.swift */,
 				8817AD672C16FE860016B38E /* Trend.swift */,
 				88576EE32C1842B300352EE1 /* Search.swift */,
 			);
