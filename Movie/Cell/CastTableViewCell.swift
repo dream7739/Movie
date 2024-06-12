@@ -28,14 +28,14 @@ class CastTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy(){
+    private func configureHierarchy(){
         contentView.addSubview(castImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(descriptionLabel)
         
     }
     
-    func configureLayout(){
+    private func configureLayout(){
         castImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(20)
@@ -56,12 +56,12 @@ class CastTableViewCell: UITableViewCell {
         
     }
     
-    func configureUI(){
+    private func configureUI(){
         castImageView.contentMode = .scaleAspectFill
         
-        nameLabel.font = .secondary
+        nameLabel.font = Constant.Font.secondary
         
-        descriptionLabel.font = .tertiary
+        descriptionLabel.font = Constant.Font.tertiary
         descriptionLabel.textColor = .lightGray
     }
     

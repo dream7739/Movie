@@ -27,17 +27,17 @@ class SearchCollectionViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        posterImageView.image = UIImage()
+        posterImageView.image = Constant.Image.empty
         posterImageView.backgroundColor = .white
         titleLabel.text = ""
     }
     
-    func configureHierarchy(){
+    private func configureHierarchy(){
         contentView.addSubview(posterImageView)
         contentView.addSubview(titleLabel)
     }
     
-    func configureLayout(){
+    private func configureLayout(){
         posterImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -48,7 +48,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configureUI(){
+    private func configureUI(){
         posterImageView.contentMode = .scaleAspectFill
         
         posterImageView.layer.cornerRadius = 8
@@ -56,7 +56,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
         
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
-        titleLabel.font = .tertiary
+        titleLabel.font = Constant.Font.tertiary
         titleLabel.numberOfLines = 0
     }
     
@@ -74,7 +74,6 @@ class SearchCollectionViewCell: UICollectionViewCell {
     }
     
     func cancelDownload(){
-        print(#function)
         posterImageView.kf.cancelDownloadTask()
     }
     

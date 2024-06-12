@@ -80,7 +80,7 @@ class CastViewController: UIViewController {
     }
     
     func configureNav(){
-        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonClicked))
+        let back = UIBarButtonItem(image:Constant.Image.left, style: .plain, target: self, action: #selector(backButtonClicked))
         navigationItem.leftBarButtonItem = back
         
         navigationController?.navigationBar.tintColor = .black
@@ -133,7 +133,7 @@ class CastViewController: UIViewController {
         view.backgroundColor = .white
 
         titleLabel.textColor = .white
-        titleLabel.font = .systemFont(ofSize: 22, weight: .heavy)
+        titleLabel.font = Constant.Font.heavy
         titleLabel.text = movieName
         
         posterImageView.contentMode = .scaleAspectFill
@@ -182,10 +182,10 @@ extension CastViewController: UITableViewDelegate, UITableViewDataSource {
             
             if isOpened{
                 cell.overviewLabel.numberOfLines = 0
-                cell.openImageView.image = UIImage(systemName: "chevron.up")
+                cell.openImageView.image = Constant.Image.up
             }else{
                 cell.overviewLabel.numberOfLines = 2
-                cell.openImageView.image = UIImage(systemName: "chevron.down")
+                cell.openImageView.image = Constant.Image.down
             }
             
             return cell

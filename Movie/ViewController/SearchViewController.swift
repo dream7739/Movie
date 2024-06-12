@@ -50,7 +50,7 @@ class SearchViewController: UIViewController {
         callSearch(query)
     }
     
-    func configureHierarchy(){
+    private func configureHierarchy(){
         view.addSubview(searchBar)
         view.addSubview(backButton)
         view.addSubview(collectionView)
@@ -60,7 +60,7 @@ class SearchViewController: UIViewController {
         emptyView.addSubview(subAnnounceLabel)
     }
     
-    func configureLayout(){
+    private func configureLayout(){
         searchBar.snp.makeConstraints { make in
             make.top.trailing.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalTo(backButton.snp.trailing)
@@ -96,7 +96,7 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func configureUI(){
+    private func configureUI(){
         view.backgroundColor = .white
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -111,15 +111,15 @@ class SearchViewController: UIViewController {
         
         backButton.addTarget(self, action: #selector(backButtonClicked), for: .touchUpInside)
         backButton.tintColor = .black
-        backButton.setImage(.back, for: .normal)
+        backButton.setImage(Constant.Image.left, for: .normal)
         
         emptyView.isHidden = true
         announceLabel.text = "이런! 찾으시는 작품이 없습니다."
-        announceLabel.font = .systemFont(ofSize: 24, weight: .heavy)
+        announceLabel.font = Constant.Font.heavy
         announceLabel.textAlignment = .center
         
         subAnnounceLabel.text = "다른 영화를 검색해보세요"
-        subAnnounceLabel.font = .secondary
+        subAnnounceLabel.font = Constant.Font.secondary
         subAnnounceLabel.textColor = .gray
         subAnnounceLabel.textAlignment = .center
 
@@ -129,7 +129,7 @@ class SearchViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    func callSearch(_ query: String){
+    private func callSearch(_ query: String){
         print(#function)
         
         var component = URLComponents(string: APIURL.searchURL)

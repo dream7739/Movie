@@ -82,9 +82,9 @@ class TrendViewController: UIViewController {
     }
     
     func configureNav(){
-        let list = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(listButtonClicked))
+        let list = UIBarButtonItem(image: Constant.Image.list, style: .plain, target: self, action: #selector(listButtonClicked))
         
-        let search = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchButtonClicked))
+        let search = UIBarButtonItem(image: Constant.Image.search, style: .plain, target: self, action: #selector(searchButtonClicked))
         
         navigationItem.leftBarButtonItem = list
         navigationItem.rightBarButtonItem = search

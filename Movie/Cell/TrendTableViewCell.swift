@@ -36,7 +36,7 @@ class TrendTableViewCell : UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy(){
+    private func configureHierarchy(){
         contentView.addSubview(dateLabel)
         contentView.addSubview(categoryLabel)
         contentView.addSubview(shadowView)
@@ -53,7 +53,7 @@ class TrendTableViewCell : UITableViewCell {
         trendView.addSubview(detailButton)
     }
     
-    func configureLayout(){
+    private func configureLayout(){
         dateLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().offset(20)
         }
@@ -114,11 +114,11 @@ class TrendTableViewCell : UITableViewCell {
         
     }
     
-    func configureUI(){
+    private func configureUI(){
         dateLabel.textColor = .lightGray
-        dateLabel.font = .tertiary
+        dateLabel.font = Constant.Font.tertiary
         
-        categoryLabel.font = .primary
+        categoryLabel.font = Constant.Font.primary
         
         shadowView.backgroundColor = .clear
         shadowView.layer.shadowColor = UIColor.black.cgColor
@@ -135,25 +135,25 @@ class TrendTableViewCell : UITableViewCell {
         rateStackView.axis = .horizontal
         rateStackView.distribution = .fillEqually
         
-        rateLabel.font = .tertiary
+        rateLabel.font = Constant.Font.tertiary
         rateLabel.textAlignment = .center
         rateLabel.textColor = .white
         rateLabel.backgroundColor = .systemIndigo
         
-        rateValueLabel.font = .tertiary
+        rateValueLabel.font = Constant.Font.tertiary
         rateValueLabel.textAlignment = .center
         rateValueLabel.backgroundColor = .white
         
-        titleLabel.font = .primary
+        titleLabel.font = Constant.Font.primary
         
-        descriptionLabel.font = .secondary
+        descriptionLabel.font = Constant.Font.secondary
         descriptionLabel.textColor = .gray
         
         seperatorLabel.backgroundColor = .gray
         
         detailLabel.text = "자세히보기"
-        detailLabel.font = .secondary
-        detailButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        detailLabel.font = Constant.Font.secondary
+        detailButton.setImage(Constant.Image.right, for: .normal)
         detailButton.tintColor = .gray
         
     }

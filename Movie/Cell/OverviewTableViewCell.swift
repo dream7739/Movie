@@ -25,12 +25,12 @@ class OverviewTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHierarchy(){
+    private func configureHierarchy(){
         contentView.addSubview(overviewLabel)
         contentView.addSubview(openImageView)
     }
     
-    func configureLayout(){
+    private func configureLayout(){
         overviewLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(12)
             make.bottom.equalToSuperview().inset(30)
@@ -45,11 +45,11 @@ class OverviewTableViewCell: UITableViewCell {
         
     }
     
-    func configureUI(){
-        overviewLabel.font = .tertiary
+    private func configureUI(){
+        overviewLabel.font = Constant.Font.tertiary
         overviewLabel.numberOfLines = 2
         
-        openImageView.image = UIImage(systemName: "chevron.down")
+        openImageView.image = Constant.Image.down
         openImageView.tintColor = .black
     }
     
@@ -57,9 +57,4 @@ class OverviewTableViewCell: UITableViewCell {
         overviewLabel.text = data
     }
     
-    @objc func expandButtonClicked(){
-        overviewLabel.snp.updateConstraints { make in
-            make.height.equalTo(100)
-        }
-    }
 }

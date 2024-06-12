@@ -19,7 +19,7 @@
 		8817AD642C16FE540016B38E /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD632C16FE540016B38E /* APIKey.swift */; };
 		8817AD682C16FE860016B38E /* Trend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD672C16FE860016B38E /* Trend.swift */; };
 		8817AD702C16FFB80016B38E /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD6F2C16FFB80016B38E /* ReusableProtocol.swift */; };
-		8817AD722C17035F0016B38E /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD712C17035F0016B38E /* UIFont+Extension.swift */; };
+		8817AD722C17035F0016B38E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD712C17035F0016B38E /* Constant.swift */; };
 		8817AD742C1703A30016B38E /* TrendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD732C1703A30016B38E /* TrendViewController.swift */; };
 		8817AD762C1703E30016B38E /* TrendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD752C1703E30016B38E /* TrendTableViewCell.swift */; };
 		88576EDA2C183C6D00352EE1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88576ED92C183C6D00352EE1 /* SearchViewController.swift */; };
@@ -29,7 +29,6 @@
 		88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */; };
 		88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BF2C17221700E9D6A9 /* Cast.swift */; };
 		88B1A6C22C172D7F00E9D6A9 /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */; };
-		88CD44ED2C18839B002E60A0 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CD44EC2C18839B002E60A0 /* UIImage+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,7 +43,7 @@
 		8817AD632C16FE540016B38E /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		8817AD672C16FE860016B38E /* Trend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trend.swift; sourceTree = "<group>"; };
 		8817AD6F2C16FFB80016B38E /* ReusableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
-		8817AD712C17035F0016B38E /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		8817AD712C17035F0016B38E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		8817AD732C1703A30016B38E /* TrendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendViewController.swift; sourceTree = "<group>"; };
 		8817AD752C1703E30016B38E /* TrendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendTableViewCell.swift; sourceTree = "<group>"; };
 		88576ED92C183C6D00352EE1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -54,7 +53,6 @@
 		88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewCell.swift; sourceTree = "<group>"; };
 		88B1A6BF2C17221700E9D6A9 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
 		88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
-		88CD44EC2C18839B002E60A0 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +89,7 @@
 		8817AD412C16FC870016B38E /* Movie */ = {
 			isa = PBXGroup;
 			children = (
+				884D3FD32C199F5600266229 /* Constant */,
 				88576EE22C18429E00352EE1 /* Cell */,
 				88576EE12C18428A00352EE1 /* Extension */,
 				88576EDF2C18427300352EE1 /* Protocol */,
@@ -106,6 +105,14 @@
 				88B1A6BF2C17221700E9D6A9 /* Cast.swift */,
 			);
 			path = Movie;
+			sourceTree = "<group>";
+		};
+		884D3FD32C199F5600266229 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				8817AD712C17035F0016B38E /* Constant.swift */,
+			);
+			path = Constant;
 			sourceTree = "<group>";
 		};
 		88576EDD2C18425400352EE1 /* ViewController */ = {
@@ -138,8 +145,6 @@
 		88576EE12C18428A00352EE1 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				8817AD712C17035F0016B38E /* UIFont+Extension.swift */,
-				88CD44EC2C18839B002E60A0 /* UIImage+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -247,8 +252,7 @@
 				88576EDA2C183C6D00352EE1 /* SearchViewController.swift in Sources */,
 				88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */,
 				8817AD452C16FC870016B38E /* SceneDelegate.swift in Sources */,
-				8817AD722C17035F0016B38E /* UIFont+Extension.swift in Sources */,
-				88CD44ED2C18839B002E60A0 /* UIImage+Extension.swift in Sources */,
+				8817AD722C17035F0016B38E /* Constant.swift in Sources */,
 				8817AD682C16FE860016B38E /* Trend.swift in Sources */,
 				88576EE42C1842B300352EE1 /* Search.swift in Sources */,
 				8817AD702C16FFB80016B38E /* ReusableProtocol.swift in Sources */,
