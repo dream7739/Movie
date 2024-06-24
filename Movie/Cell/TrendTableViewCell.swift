@@ -86,12 +86,12 @@ class TrendTableViewCell : UITableViewCell {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(moveImageView.snp.bottom).offset(20)
+            make.top.equalTo(moveImageView.snp.bottom).offset(15)
             make.horizontalEdges.equalToSuperview().inset(20)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.top.equalTo(titleLabel.snp.bottom).offset(2)
             make.horizontalEdges.equalTo(titleLabel)
         }
         
@@ -148,6 +148,7 @@ class TrendTableViewCell : UITableViewCell {
         
         descriptionLabel.font = Constant.Font.secondary
         descriptionLabel.textColor = .gray
+        descriptionLabel.numberOfLines = 2
         
         seperatorLabel.backgroundColor = .gray
         

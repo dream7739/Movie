@@ -61,7 +61,7 @@ class APIManager {
     
     func callCast(id: Int, completion: @escaping (CastResult) -> Void ){
         
-        let url = APIURL.castURL + "/\(id)/credits?language=ko-kr"
+        let url = APIURL.movieURL + "/\(id)/credits?language=ko-kr"
         
         AF.request(url,
                    method: .get,
@@ -77,7 +77,7 @@ class APIManager {
     }
     
     func callSimilar(id: Int, page: Int, completion: @escaping (MovieResult) -> Void){
-        let url = APIURL.similarURL + "/\(id)/similar"
+        let url = APIURL.movieURL + "/\(id)/similar"
         
         let param: Parameters = ["language" : "ko-kr",
                                  "page": page]
@@ -97,7 +97,7 @@ class APIManager {
     }
     
     func callRecommend(id: Int, page: Int, completion: @escaping (MovieResult) -> Void){
-        let url = APIURL.similarURL + "/\(id)/recommendations"
+        let url = APIURL.movieURL + "/\(id)/recommendations"
         
         let param: Parameters = ["language" : "ko-kr",
                                  "page": page]
@@ -107,6 +107,22 @@ class APIManager {
                    encoding: URLEncoding.queryString,
                    headers: header)
         .responseDecodable(of: MovieResult.self) { response in
+            switch response.result {
+            case .success(let value):
+                completion(value)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func callPoster(id: Int, completion: @escaping (PosterResult) -> Void){
+        let url = APIURL.movieURL + "/\(id)/images"
+        
+        AF.request(url,
+                   method: .get,
+                   headers: header)
+        .responseDecodable(of: PosterResult.self) { response in
             switch response.result {
             case .success(let value):
                 completion(value)

@@ -13,16 +13,22 @@ class RecommendViewController: UIViewController {
     let similarLabel = UILabel()
     
     let recommendLabel = UILabel()
+    
+    let posterLabel = UILabel()
 
     lazy var similarCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     lazy var recommendCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
+    lazy var posterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+
     var movieId: Int?
 
     var similar = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
     
     var recommend = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
+    
+    var poster = PosterResult(posters: [])
 
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -51,6 +57,11 @@ class RecommendViewController: UIViewController {
             self.recommendCollectionView.reloadData()
         }
         
+        APIManager.shared.callPoster(id: movieId) { posterResult in
+            self.poster = posterResult
+            self.posterCollectionView.reloadData()
+        }
+        
         configureHierarchy()
         configureLayout()
         configureUI()
@@ -65,8 +76,10 @@ extension RecommendViewController {
     func configureHierarchy(){
         view.addSubview(similarLabel)
         view.addSubview(recommendLabel)
+        view.addSubview(posterLabel)
         view.addSubview(similarCollectionView)
         view.addSubview(recommendCollectionView)
+        view.addSubview(posterCollectionView)
     }
     
     func configureLayout(){
@@ -90,6 +103,17 @@ extension RecommendViewController {
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(view.bounds.height / 5 + 20)
         }
+        
+        posterLabel.snp.makeConstraints { make in
+            make.top.equalTo(recommendCollectionView.snp.bottom).offset(10)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
+        }
+        
+        posterCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(posterLabel.snp.bottom).offset(4)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(view.bounds.height / 5 + 20)
+        }
     }
     
     func configureUI(){
@@ -100,6 +124,9 @@ extension RecommendViewController {
         
         recommendLabel.text = "추천 영화"
         recommendLabel.font = Constant.Font.primary
+        
+        posterLabel.text = "포스터"
+        posterLabel.font = Constant.Font.primary
     }
     
     func configureCollectionView(){
@@ -114,6 +141,12 @@ extension RecommendViewController {
         recommendCollectionView.prefetchDataSource = self
         recommendCollectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
         recommendCollectionView.showsHorizontalScrollIndicator = false
+        
+        posterCollectionView.delegate = self
+        posterCollectionView.dataSource = self
+        posterCollectionView.prefetchDataSource = self
+        posterCollectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
+        posterCollectionView.showsHorizontalScrollIndicator = false
 
     }
 }
@@ -123,8 +156,10 @@ extension RecommendViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == similarCollectionView {
             return similar.results.count
-        }else{
+        }else if collectionView == recommendCollectionView{
             return recommend.results.count
+        }else{
+            return poster.posters.count
         }
     }
     
@@ -134,8 +169,11 @@ extension RecommendViewController: UICollectionViewDataSource, UICollectionViewD
         if collectionView == similarCollectionView {
             let data = similar.results[indexPath.item]
             cell.configureData(data)
-        }else{
+        }else if collectionView == recommendCollectionView {
             let data = recommend.results[indexPath.item]
+            cell.configureData(data)
+        }else{
+            let data = poster.posters[indexPath.item]
             cell.configureData(data)
         }
         
@@ -159,7 +197,7 @@ extension RecommendViewController: UICollectionViewDataSourcePrefetching {
                     }
                 }
             }
-        }else{
+        }else if collectionView == recommendCollectionView {
             for idx in indexPaths {
                 if idx.item == recommend.results.count - 4 {
                     recommend.page += 1

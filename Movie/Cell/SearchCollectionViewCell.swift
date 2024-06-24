@@ -70,6 +70,15 @@ class PosterCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    func configureData(_ data: Poster){
+        if let url = data.posterURL {
+            posterImageView.kf.indicatorType = .activity
+            posterImageView.kf.setImage(with: url)
+        }else{
+            posterImageView.backgroundColor = Constant.Color.empty
+        }
+    }
+    
     func cancelDownload(){
         posterImageView.kf.cancelDownloadTask()
     }
