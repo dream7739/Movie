@@ -11,75 +11,34 @@ import SnapKit
 
 
 class TrendViewController: UIViewController {
-
+    
     let trendTableView = UITableView()
-        
-    var list: [Trend] = [] {
-        didSet {
-            trendTableView.reloadData()
-        }
-    }
+    
+    var list: [Trend] = []
+    var page = 1
+    
+    var trendResult = TrendResult(results: [], total_pages: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        callGenreList()
+        APIManager.shared.callGenreList{
+            APIManager.shared.callTrend(page: self.page) { trendResult in
+                self.trendResult = trendResult
+                self.trendTableView.reloadData()
+            }
+        }
+        
         configureHierarchy()
         configureLayout()
         configureUI()
         configureTableView()
         
         navigationItem.title = "TREND"
+    }
+}
 
-    }
-    
-    func callGenreList(){
-        let header: HTTPHeaders = [
-            "Authorization" : APIKey.trendKey,
-            "accept" : "application/json"
-        ]
-        
-        let param: Parameters = ["language" : "ko-kr"]
-        
-        AF.request(APIURL.genreURL,
-                   method: .get,
-                   parameters: param,
-                   encoding: URLEncoding.queryString,
-                   headers: header)
-        .responseDecodable(of: GenreResult.self) { response in
-            switch response.result {
-            case .success(let value):
-                GenreResult.genreList = value.genres
-                self.callTrendMovie()
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    func callTrendMovie(){
-        let header: HTTPHeaders = [
-            "Authorization" : APIKey.trendKey,
-            "accept" : "application/json"
-        ]
-        
-        let param: Parameters = ["language" : "ko-kr"]
-        
-        AF.request(APIURL.trendURL,
-                   method: .get,
-                   parameters: param,
-                   encoding: URLEncoding.queryString,
-                   headers: header)
-        .responseDecodable(of: TrendResult.self) { response in
-            switch response.result {
-            case .success(let value):
-                self.list = value.results
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-
+extension TrendViewController {
     func configureHierarchy(){
         view.addSubview(trendTableView)
     }
@@ -97,34 +56,49 @@ class TrendViewController: UIViewController {
     func configureTableView(){
         trendTableView.delegate = self
         trendTableView.dataSource = self
+        trendTableView.prefetchDataSource = self
         trendTableView.rowHeight = 480
         trendTableView.separatorStyle = .none
         
         trendTableView.register(TrendTableViewCell.self, forCellReuseIdentifier: TrendTableViewCell.identifier)
     }
-
+    
 }
 
 extension TrendViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return trendResult.results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: indexPath) as! TrendTableViewCell
         
-        let data = list[indexPath.row]
+        let data = trendResult.results[indexPath.row]
         cell.configureData(data)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = list[indexPath.row]
+        let data = trendResult.results[indexPath.row]
         let vc = CastViewController()
         vc.trend = data
         navigationController?.pushViewController(vc, animated: true)
         
         tableView.reloadRows(at: [indexPath], with: .none)
+    }
+}
+
+extension TrendViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for idx in indexPaths {
+            page += 1
+            if idx.row == trendResult.results.count - 4 && page <= trendResult.total_pages {
+                APIManager.shared.callTrend(page: page) { trendResult in
+                    self.trendResult.results.append(contentsOf: trendResult.results)
+                    self.trendTableView.reloadData()
+                }
+            }
+        }
     }
 }

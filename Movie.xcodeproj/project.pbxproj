@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		881180182C2954EB00BED01F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881180172C2954EB00BED01F /* TabBarController.swift */; };
+		8811801B2C29629700BED01F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8811801A2C29629700BED01F /* APIManager.swift */; };
+		8811801D2C29696100BED01F /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8811801C2C29696100BED01F /* Genre.swift */; };
 		8817AD432C16FC870016B38E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD422C16FC870016B38E /* AppDelegate.swift */; };
 		8817AD452C16FC870016B38E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD442C16FC870016B38E /* SceneDelegate.swift */; };
 		8817AD472C16FC870016B38E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD462C16FC870016B38E /* ViewController.swift */; };
@@ -34,6 +36,8 @@
 
 /* Begin PBXFileReference section */
 		881180172C2954EB00BED01F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		8811801A2C29629700BED01F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		8811801C2C29696100BED01F /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		8817AD3F2C16FC870016B38E /* Movie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8817AD422C16FC870016B38E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8817AD442C16FC870016B38E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +75,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		881180192C29628E00BED01F /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				8811801A2C29629700BED01F /* APIManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		8817AD362C16FC870016B38E = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +103,7 @@
 		8817AD412C16FC870016B38E /* Movie */ = {
 			isa = PBXGroup;
 			children = (
+				881180192C29628E00BED01F /* Manager */,
 				884D3FD32C199F5600266229 /* Constant */,
 				88576EE22C18429E00352EE1 /* Cell */,
 				88576EE12C18428A00352EE1 /* Extension */,
@@ -133,6 +146,7 @@
 				88B1A6BF2C17221700E9D6A9 /* Cast.swift */,
 				8817AD672C16FE860016B38E /* Trend.swift */,
 				88576EE32C1842B300352EE1 /* Search.swift */,
+				8811801C2C29696100BED01F /* Genre.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -251,11 +265,13 @@
 				88B1A6BC2C1710FE00E9D6A9 /* CastViewController.swift in Sources */,
 				88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */,
 				881180182C2954EB00BED01F /* TabBarController.swift in Sources */,
+				8811801D2C29696100BED01F /* Genre.swift in Sources */,
 				8817AD432C16FC870016B38E /* AppDelegate.swift in Sources */,
 				8817AD642C16FE540016B38E /* APIKey.swift in Sources */,
 				88576EDA2C183C6D00352EE1 /* SearchViewController.swift in Sources */,
 				88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */,
 				8817AD452C16FC870016B38E /* SceneDelegate.swift in Sources */,
+				8811801B2C29629700BED01F /* APIManager.swift in Sources */,
 				8817AD722C17035F0016B38E /* Constant.swift in Sources */,
 				8817AD682C16FE860016B38E /* Trend.swift in Sources */,
 				88576EE42C1842B300352EE1 /* Search.swift in Sources */,

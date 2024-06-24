@@ -8,7 +8,8 @@
 import Foundation
 
 struct TrendResult: Decodable {
-    let results: [Trend]
+    var results: [Trend]
+    let total_pages: Int
 }
     
 struct Trend: Decodable {
@@ -56,12 +57,3 @@ struct Trend: Decodable {
     
 }
 
-struct GenreResult: Decodable {
-    let genres: [Genre]
-    static var genreList : [Genre] = []
-}
-
-struct Genre: Decodable {
-    let id: Int
-    let name: String
-}
