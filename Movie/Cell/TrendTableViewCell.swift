@@ -138,7 +138,7 @@ class TrendTableViewCell : UITableViewCell {
         rateLabel.font = Constant.Font.tertiary
         rateLabel.textAlignment = .center
         rateLabel.textColor = .white
-        rateLabel.backgroundColor = .systemIndigo
+        rateLabel.backgroundColor = Constant.Color.theme
         
         rateValueLabel.font = Constant.Font.tertiary
         rateValueLabel.textAlignment = .center

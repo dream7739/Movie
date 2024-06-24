@@ -44,15 +44,18 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        callSearch(query)
+
         configureHierarchy()
         configureLayout()
         configureUI()
-        callSearch(query)
+        
+        navigationItem.title = "SEARCH"
     }
     
+
     private func configureHierarchy(){
         view.addSubview(searchBar)
-        view.addSubview(backButton)
         view.addSubview(collectionView)
         
         view.addSubview(emptyView)
@@ -62,15 +65,8 @@ class SearchViewController: UIViewController {
     
     private func configureLayout(){
         searchBar.snp.makeConstraints { make in
-            make.top.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(backButton.snp.trailing)
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(44)
-        }
-        
-        backButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.size.equalTo(44)
         }
         
         collectionView.snp.makeConstraints { make in
@@ -108,10 +104,6 @@ class SearchViewController: UIViewController {
         searchBar.placeholder = "영화를 검색하세요"
         searchBar.tintColor = .black
         searchBar.searchBarStyle = .minimal
-        
-        backButton.addTarget(self, action: #selector(backButtonClicked), for: .touchUpInside)
-        backButton.tintColor = .black
-        backButton.setImage(Constant.Image.left, for: .normal)
         
         emptyView.isHidden = true
         announceLabel.text = "이런! 찾으시는 작품이 없습니다."

@@ -24,15 +24,16 @@ class TrendViewController: UIViewController {
         super.viewDidLoad()
         
         callGenreList()
-        
-        configureNav()
         configureHierarchy()
         configureLayout()
         configureUI()
         configureTableView()
+        
+        navigationItem.title = "TREND"
+
     }
     
-    func  callGenreList(){
+    func callGenreList(){
         let header: HTTPHeaders = [
             "Authorization" : APIKey.trendKey,
             "accept" : "application/json"
@@ -78,25 +79,7 @@ class TrendViewController: UIViewController {
             }
         }
     }
-    
-    func configureNav(){
-        let list = UIBarButtonItem(image: Constant.Image.list, style: .plain, target: self, action: #selector(listButtonClicked))
-        
-        let search = UIBarButtonItem(image: Constant.Image.search, style: .plain, target: self, action: #selector(searchButtonClicked))
-        
-        navigationItem.leftBarButtonItem = list
-        navigationItem.rightBarButtonItem = search
-        navigationController?.navigationBar.tintColor = .black
-    }
-    
-    @objc func listButtonClicked(){ }
-    
-    @objc func searchButtonClicked(){
-        let vc = SearchViewController()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
-    
+
     func configureHierarchy(){
         view.addSubview(trendTableView)
     }
