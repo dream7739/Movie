@@ -31,7 +31,7 @@ class CastViewController: UIViewController {
     
     let castTableView = UITableView(frame: .zero, style: .plain)
     
-    var trend: Trend?
+    var movie: Movie?
     
     var list: [Cast] = []
     
@@ -40,8 +40,8 @@ class CastViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let trend{
-            APIManager.shared.callCast(id: trend.id){ castResult in
+        if let movie{
+            APIManager.shared.callCast(id: movie.id){ castResult in
                 self.list = castResult.cast
                 self.castTableView.reloadData()
             }
@@ -53,8 +53,22 @@ class CastViewController: UIViewController {
         configureUI()
         configureTableView()
         
-        navigationItem.title = trend?.title
+        navigationItem.title = movie?.title
+        
+        let more = UIBarButtonItem(image: Constant.Image.more, style: .plain, target: self, action: #selector(moreButtonClicked))
+        more.tintColor = UIColor.black
+        navigationItem.rightBarButtonItem = more
 
+        let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backButtonItem.tintColor = Constant.Color.primary
+        navigationItem.backBarButtonItem = backButtonItem
+    }
+    
+    @objc func moreButtonClicked(){
+        guard let movie else { return }
+        let recommendVC = RecommendViewController()
+        recommendVC.movieId = movie.id
+        navigationController?.pushViewController(recommendVC, animated: true)
     }
     
   
@@ -100,26 +114,26 @@ extension CastViewController {
     }
     
     func configureUI(){
-        guard let trend else { return }
+        guard let movie else { return }
         
         view.backgroundColor = .white
 
         titleLabel.textColor = .white
         titleLabel.font = Constant.Font.heavy
-        titleLabel.text = trend.title
+        titleLabel.text = movie.title
         
         posterImageView.contentMode = .scaleAspectFill
         
         backdropImageView.contentMode = .scaleToFill
         backdropImageView.clipsToBounds = true
         
-        if let url = trend.posterURL {
+        if let url = movie.posterURL {
             posterImageView.kf.setImage(with: url)
         }else{
             posterImageView.backgroundColor = Constant.Color.empty
         }
         
-        if let url = trend.backDropURL {
+        if let url = movie.backDropURL {
             backdropImageView.kf.setImage(with: url)
         }else{
             backdropImageView.backgroundColor = Constant.Color.empty
@@ -156,7 +170,7 @@ extension CastViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier, for: indexPath) as! OverviewTableViewCell
             
-            if let overview = trend?.overview {
+            if let overview = movie?.overview {
                 cell.configureData(overview)
             }
             

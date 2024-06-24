@@ -19,7 +19,6 @@ struct Cast: Decodable {
     let character: String?
     let profile_path: String?
     
-    
     var characterDescription: String {
         guard let character else { return ""}
         return character

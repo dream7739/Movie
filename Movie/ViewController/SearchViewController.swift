@@ -24,7 +24,7 @@ class SearchViewController: UIViewController {
     
     let subAnnounceLabel = UILabel()
     
-    var list = SearchResult(page: 1, results: [], total_pages: 0, total_results: 0)
+    var list = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
     
     var page = 1
     
@@ -97,7 +97,7 @@ class SearchViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
-        collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
+        collectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
         collectionView.keyboardDismissMode = .onDrag
         
         searchBar.delegate = self
@@ -141,7 +141,7 @@ class SearchViewController: UIViewController {
                    method: .get,
                    headers: header
                    )
-        .responseDecodable(of: SearchResult.self) { response in
+        .responseDecodable(of: MovieResult.self) { response in
             switch response.result {
             case .success(let value):
                 
@@ -190,7 +190,7 @@ extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
         
         for idx in indexPaths {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: idx) as! SearchCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.identifier, for: idx) as! PosterCollectionViewCell
             cell.cancelDownload()
         }
     }
@@ -200,7 +200,7 @@ extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as! SearchCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.identifier, for: indexPath) as! PosterCollectionViewCell
         
         let data = list.results[indexPath.row]
         

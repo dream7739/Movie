@@ -158,7 +158,7 @@ class TrendTableViewCell : UITableViewCell {
         
     }
     
-    func configureData(_ data: Trend){
+    func configureData(_ data: Movie){
         dateLabel.text = data.dateDescription
         
         if let url = data.backDropURL{

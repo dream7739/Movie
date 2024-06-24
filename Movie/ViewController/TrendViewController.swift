@@ -16,7 +16,7 @@ class TrendViewController: UIViewController {
     
     var page = 1
     
-    var trendResult = TrendResult(results: [], total_pages: 0)
+    var trendResult = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +85,7 @@ extension TrendViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = trendResult.results[indexPath.row]
         let vc = CastViewController()
-        vc.trend = data
+        vc.movie = data
         navigationController?.pushViewController(vc, animated: true)
         
         tableView.reloadRows(at: [indexPath], with: .none)

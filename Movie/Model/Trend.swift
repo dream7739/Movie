@@ -7,18 +7,20 @@
 
 import Foundation
 
-struct TrendResult: Decodable {
-    var results: [Trend]
+struct MovieResult: Decodable {
+    let page: Int
+    var results: [Movie]
     let total_pages: Int
+    let total_results: Int
 }
     
-struct Trend: Decodable {
+struct Movie: Decodable {
     let backdrop_path: String?
     let id: Int
     let original_title: String
     let overview: String
     let poster_path: String?
-    let title: String
+    let title: String?
     let genre_ids: [Int]
     let release_date: String
     let vote_average: Double

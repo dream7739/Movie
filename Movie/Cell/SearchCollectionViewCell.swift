@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class SearchCollectionViewCell: UICollectionViewCell {
+class PosterCollectionViewCell: UICollectionViewCell {
     
     let posterImageView = UIImageView()
     
@@ -60,7 +60,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
         titleLabel.numberOfLines = 0
     }
     
-    func configureData(_ data: Search){
+    func configureData(_ data: Movie){
         if let url = data.posterURL {
             posterImageView.kf.indicatorType = .activity
             posterImageView.kf.setImage(with: url)

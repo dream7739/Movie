@@ -10,6 +10,7 @@
 		881180182C2954EB00BED01F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881180172C2954EB00BED01F /* TabBarController.swift */; };
 		8811801B2C29629700BED01F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8811801A2C29629700BED01F /* APIManager.swift */; };
 		8811801D2C29696100BED01F /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8811801C2C29696100BED01F /* Genre.swift */; };
+		881180212C29854B00BED01F /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881180202C29854B00BED01F /* RecommendViewController.swift */; };
 		8817AD432C16FC870016B38E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD422C16FC870016B38E /* AppDelegate.swift */; };
 		8817AD452C16FC870016B38E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD442C16FC870016B38E /* SceneDelegate.swift */; };
 		8817AD472C16FC870016B38E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD462C16FC870016B38E /* ViewController.swift */; };
@@ -27,7 +28,6 @@
 		8817AD762C1703E30016B38E /* TrendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD752C1703E30016B38E /* TrendTableViewCell.swift */; };
 		88576EDA2C183C6D00352EE1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88576ED92C183C6D00352EE1 /* SearchViewController.swift */; };
 		88576EDC2C18403100352EE1 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88576EDB2C18403100352EE1 /* SearchCollectionViewCell.swift */; };
-		88576EE42C1842B300352EE1 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88576EE32C1842B300352EE1 /* Search.swift */; };
 		88B1A6BC2C1710FE00E9D6A9 /* CastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */; };
 		88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */; };
 		88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BF2C17221700E9D6A9 /* Cast.swift */; };
@@ -38,6 +38,7 @@
 		881180172C2954EB00BED01F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8811801A2C29629700BED01F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		8811801C2C29696100BED01F /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
+		881180202C29854B00BED01F /* RecommendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendViewController.swift; sourceTree = "<group>"; };
 		8817AD3F2C16FC870016B38E /* Movie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8817AD422C16FC870016B38E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8817AD442C16FC870016B38E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,7 +55,6 @@
 		8817AD752C1703E30016B38E /* TrendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendTableViewCell.swift; sourceTree = "<group>"; };
 		88576ED92C183C6D00352EE1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		88576EDB2C18403100352EE1 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
-		88576EE32C1842B300352EE1 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastViewController.swift; sourceTree = "<group>"; };
 		88B1A6BD2C171A2700E9D6A9 /* CastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewCell.swift; sourceTree = "<group>"; };
 		88B1A6BF2C17221700E9D6A9 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
@@ -136,6 +136,7 @@
 				88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */,
 				8817AD732C1703A30016B38E /* TrendViewController.swift */,
 				881180172C2954EB00BED01F /* TabBarController.swift */,
+				881180202C29854B00BED01F /* RecommendViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -145,7 +146,6 @@
 			children = (
 				88B1A6BF2C17221700E9D6A9 /* Cast.swift */,
 				8817AD672C16FE860016B38E /* Trend.swift */,
-				88576EE32C1842B300352EE1 /* Search.swift */,
 				8811801C2C29696100BED01F /* Genre.swift */,
 			);
 			path = Model;
@@ -267,6 +267,7 @@
 				881180182C2954EB00BED01F /* TabBarController.swift in Sources */,
 				8811801D2C29696100BED01F /* Genre.swift in Sources */,
 				8817AD432C16FC870016B38E /* AppDelegate.swift in Sources */,
+				881180212C29854B00BED01F /* RecommendViewController.swift in Sources */,
 				8817AD642C16FE540016B38E /* APIKey.swift in Sources */,
 				88576EDA2C183C6D00352EE1 /* SearchViewController.swift in Sources */,
 				88B1A6BE2C171A2700E9D6A9 /* CastTableViewCell.swift in Sources */,
@@ -274,7 +275,6 @@
 				8811801B2C29629700BED01F /* APIManager.swift in Sources */,
 				8817AD722C17035F0016B38E /* Constant.swift in Sources */,
 				8817AD682C16FE860016B38E /* Trend.swift in Sources */,
-				88576EE42C1842B300352EE1 /* Search.swift in Sources */,
 				8817AD702C16FFB80016B38E /* ReusableProtocol.swift in Sources */,
 				88576EDC2C18403100352EE1 /* SearchCollectionViewCell.swift in Sources */,
 			);

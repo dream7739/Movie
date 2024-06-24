@@ -39,7 +39,7 @@ class APIManager {
       }
       
     
-    func callTrend(page: Int, completion: @escaping (TrendResult) -> Void){
+    func callTrend(page: Int, completion: @escaping (MovieResult) -> Void){
         
         let param: Parameters = ["language" : "ko-kr",
                                  "page": page]
@@ -49,7 +49,7 @@ class APIManager {
                    parameters: param,
                    encoding: URLEncoding.queryString,
                    headers: header)
-        .responseDecodable(of: TrendResult.self) { response in
+        .responseDecodable(of: MovieResult.self) { response in
             switch response.result {
             case .success(let value):
                 completion(value)
@@ -73,6 +73,50 @@ class APIManager {
                 case .failure(let error):
                     print(error)
                 }
+        }
+    }
+    
+    func callSimilar(id: Int, page: Int, completion: @escaping (MovieResult) -> Void){
+        let url = APIURL.similarURL + "/\(id)/similar"
+        
+        let param: Parameters = ["language" : "ko-kr",
+                                 "page": page]
+        AF.request(url,
+                   method: .get,
+                   parameters: param,
+                   encoding: URLEncoding.queryString,
+                   headers: header)
+        .responseDecodable(of: MovieResult.self) { response in
+            print(response)
+            switch response.result {
+            case .success(let value):
+                print("value")
+                completion(value)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func callRecommend(id: Int, page: Int, completion: @escaping (MovieResult) -> Void){
+        let url = APIURL.similarURL + "/\(id)/recommendations"
+        
+        let param: Parameters = ["language" : "ko-kr",
+                                 "page": page]
+        AF.request(url,
+                   method: .get,
+                   parameters: param,
+                   encoding: URLEncoding.queryString,
+                   headers: header)
+        .responseDecodable(of: MovieResult.self) { response in
+            print(response)
+            switch response.result {
+            case .success(let value):
+                print("value")
+                completion(value)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 }

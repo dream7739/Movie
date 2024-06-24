@@ -27,6 +27,7 @@ enum Constant {
         static let list = UIImage(systemName: "list.bullet")!
         static let search = UIImage(named: "magnifying-glass")!
         static let trend = UIImage(named: "popularity")!
+        static let more = UIImage(systemName: "ellipsis.circle")
     }
     
     enum Color {
