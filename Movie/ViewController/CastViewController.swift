@@ -33,62 +33,34 @@ class CastViewController: UIViewController {
     
     var trend: Trend?
     
-    var list: [Cast] = []{
-        didSet {
-            castTableView.reloadData()
-        }
-    }
+    var list: [Cast] = []
     
     var isOpened = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        callCast()
+        if let trend{
+            APIManager.shared.callCast(id: trend.id){ castResult in
+                self.list = castResult.cast
+                self.castTableView.reloadData()
+            }
+
+        }
         
-        configureNav()
         configureHierarchy()
         configureLayout()
         configureUI()
         configureTableView()
-    }
-    
-    func callCast(){
         
-        guard let trend else { return }
-        
-        let header: HTTPHeaders = [
-            "Authorization" : APIKey.trendKey,
-            "accept" : "application/json"
-        ]
+        navigationItem.title = trend?.title
 
-        let url = APIURL.castURL + "/\(trend.id)/credits?language=ko-kr"
-        
-        AF.request(url,
-                   method: .get,
-                   headers: header)
-        .responseDecodable(of: CastResult.self) { response in
-                switch response.result {
-                case .success(let value):
-                    self.list = value.cast
-                case .failure(let error):
-                    print(error)
-                }
-        }
     }
     
-    func configureNav(){
-        let back = UIBarButtonItem(image:Constant.Image.left, style: .plain, target: self, action: #selector(backButtonClicked))
-        navigationItem.leftBarButtonItem = back
-        
-        navigationController?.navigationBar.tintColor = .black
-        navigationItem.title = "출연/제작"
-    }
-    
-    @objc func backButtonClicked(){
-        navigationController?.popViewController(animated: true)
-    }
-    
+  
+}
+
+extension CastViewController {
     func configureHierarchy(){
         view.addSubview(headerView)
         headerView.addSubview(backdropImageView)

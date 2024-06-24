@@ -14,7 +14,6 @@ class TrendViewController: UIViewController {
     
     let trendTableView = UITableView()
     
-    var list: [Trend] = []
     var page = 1
     
     var trendResult = TrendResult(results: [], total_pages: 0)
@@ -35,6 +34,10 @@ class TrendViewController: UIViewController {
         configureTableView()
         
         navigationItem.title = "TREND"
+        let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backButtonItem.tintColor = Constant.Color.primary
+        navigationItem.backBarButtonItem = backButtonItem
+    
     }
 }
 
