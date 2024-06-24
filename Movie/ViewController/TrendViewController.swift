@@ -37,7 +37,7 @@ class TrendViewController: UIViewController {
         let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         backButtonItem.tintColor = Constant.Color.primary
         navigationItem.backBarButtonItem = backButtonItem
-    
+        
     }
 }
 
@@ -95,11 +95,13 @@ extension TrendViewController : UITableViewDelegate, UITableViewDataSource {
 extension TrendViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
-            page += 1
-            if idx.row == trendResult.results.count - 4 && page <= trendResult.total_pages {
-                APIManager.shared.callTrend(page: page) { trendResult in
-                    self.trendResult.results.append(contentsOf: trendResult.results)
-                    self.trendTableView.reloadData()
+            if idx.row == trendResult.results.count - 4  {
+                page += 1
+                if page <= trendResult.total_pages {
+                    APIManager.shared.callTrend(page: page) { trendResult in
+                        self.trendResult.results.append(contentsOf: trendResult.results)
+                        self.trendTableView.reloadData()
+                    }
                 }
             }
         }

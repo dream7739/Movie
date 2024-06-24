@@ -105,11 +105,13 @@ extension RecommendViewController {
     func configureCollectionView(){
         similarCollectionView.delegate = self
         similarCollectionView.dataSource = self
+        similarCollectionView.prefetchDataSource = self
         similarCollectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
         similarCollectionView.showsHorizontalScrollIndicator = false
         
         recommendCollectionView.delegate = self
         recommendCollectionView.dataSource = self
+        recommendCollectionView.prefetchDataSource = self
         recommendCollectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
         recommendCollectionView.showsHorizontalScrollIndicator = false
 
@@ -139,6 +141,38 @@ extension RecommendViewController: UICollectionViewDataSource, UICollectionViewD
         
         return cell
     }
-    
+
+}
+
+extension RecommendViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        if collectionView == similarCollectionView {
+            for idx in indexPaths {
+                if idx.item == similar.results.count - 4 {
+                    similar.page += 1
+                    if similar.page <= similar.total_pages {
+                        guard let movieId else { return }
+                        APIManager.shared.callSimilar(id: movieId, page: similar.page) { movieResult in
+                            self.similar.results.append(contentsOf: movieResult.results)
+                            self.similarCollectionView.reloadData()
+                        }
+                    }
+                }
+            }
+        }else{
+            for idx in indexPaths {
+                if idx.item == recommend.results.count - 4 {
+                    recommend.page += 1
+                    if recommend.page <= recommend.total_pages {
+                        guard let movieId else { return }
+                        APIManager.shared.callRecommend(id: movieId, page: recommend.page) { movieResult in
+                            self.recommend.page += 1
+                            self.recommendCollectionView.reloadData()
+                        }
+                    }
+                }
+            }
+        }
+    }
     
 }

@@ -87,10 +87,8 @@ class APIManager {
                    encoding: URLEncoding.queryString,
                    headers: header)
         .responseDecodable(of: MovieResult.self) { response in
-            print(response)
             switch response.result {
             case .success(let value):
-                print("value")
                 completion(value)
             case .failure(let error):
                 print(error)
@@ -109,10 +107,8 @@ class APIManager {
                    encoding: URLEncoding.queryString,
                    headers: header)
         .responseDecodable(of: MovieResult.self) { response in
-            print(response)
             switch response.result {
             case .success(let value):
-                print("value")
                 completion(value)
             case .failure(let error):
                 print(error)

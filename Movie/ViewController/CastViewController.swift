@@ -10,15 +10,6 @@ import Alamofire
 import Kingfisher
 import SnapKit
 
-enum Section: Int, CaseIterable {
-    case OverView = 0
-    case Cast = 1
-    
-    var title: String {
-       return "\(self)"
-    }
-}
-
 class CastViewController: UIViewController {
     
     let headerView = UIView()
@@ -75,6 +66,15 @@ class CastViewController: UIViewController {
 }
 
 extension CastViewController {
+    enum Section: Int, CaseIterable {
+        case OverView = 0
+        case Cast = 1
+        
+        var title: String {
+           return "\(self)"
+        }
+    }
+    
     func configureHierarchy(){
         view.addSubview(headerView)
         headerView.addSubview(backdropImageView)

@@ -122,7 +122,6 @@ class SearchViewController: UIViewController {
     }
     
     private func callSearch(_ query: String){
-        print(#function)
         
         var component = URLComponents(string: APIURL.searchURL)
         let query = URLQueryItem(name: "query", value: "\(query)")
@@ -179,9 +178,11 @@ extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         
         for idx in indexPaths {
-            if list.results.count - 2 == idx.row && page <= list.total_pages{
+            if list.results.count - 2 == idx.item {
                 page += 1
-                callSearch(query)
+                if page <= list.total_pages{
+                    callSearch(query)
+                }
             }
         }
         
