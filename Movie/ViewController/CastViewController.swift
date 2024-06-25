@@ -10,7 +10,7 @@ import Alamofire
 import Kingfisher
 import SnapKit
 
-class CastViewController: UIViewController {
+class CastViewController: BaseViewController {
     
     let headerView = UIView()
     
@@ -30,29 +30,13 @@ class CastViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let movie{
-            APIManager.shared.callCast(id: movie.id){ castResult in
-                self.list = castResult.cast
-                self.castTableView.reloadData()
-            }
-
-        }
-        
-        configureHierarchy()
-        configureLayout()
-        configureUI()
+        callAPI()
         configureTableView()
         
         navigationItem.title = movie?.title
-        
         let more = UIBarButtonItem(image: Constant.Image.more, style: .plain, target: self, action: #selector(moreButtonClicked))
         more.tintColor = UIColor.black
         navigationItem.rightBarButtonItem = more
-
-        let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        backButtonItem.tintColor = Constant.Color.primary
-        navigationItem.backBarButtonItem = backButtonItem
     }
     
     @objc func moreButtonClicked(){
@@ -62,20 +46,7 @@ class CastViewController: UIViewController {
         navigationController?.pushViewController(recommendVC, animated: true)
     }
     
-  
-}
-
-extension CastViewController {
-    enum Section: Int, CaseIterable {
-        case OverView = 0
-        case Cast = 1
-        
-        var title: String {
-           return "\(self)"
-        }
-    }
-    
-    func configureHierarchy(){
+    override func configureHierarchy(){
         view.addSubview(headerView)
         headerView.addSubview(backdropImageView)
         headerView.addSubview(titleLabel)
@@ -84,7 +55,7 @@ extension CastViewController {
         view.addSubview(castTableView)
     }
     
-    func configureLayout(){
+    override func configureLayout(){
         headerView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -113,7 +84,7 @@ extension CastViewController {
         }
     }
     
-    func configureUI(){
+    override func configureUI(){
         guard let movie else { return }
         
         view.backgroundColor = .white
@@ -140,7 +111,29 @@ extension CastViewController {
         }
         
     }
+  
+}
+
+extension CastViewController {
+    enum Section: Int, CaseIterable {
+        case OverView = 0
+        case Cast = 1
+        
+        var title: String {
+           return "\(self)"
+        }
+    }
     
+    func callAPI(){
+        if let movie{
+            APIManager.shared.callCast(id: movie.id){ castResult in
+                self.list = castResult.cast
+                self.castTableView.reloadData()
+            }
+
+        }
+    }
+   
     func configureTableView(){
         castTableView.delegate = self
         castTableView.dataSource = self

@@ -10,11 +10,9 @@ import Alamofire
 import Kingfisher
 import SnapKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: BaseViewController {
     
     let searchBar = UISearchBar()
-    
-    let backButton = UIButton(type: .system)
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     
@@ -44,17 +42,33 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        callSearch(query)
-
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-        
+        callAPI()
         navigationItem.title = "SEARCH"
     }
     
+    func callAPI(){
+        APIManager.shared.callSearch(page: page, query: query) { movieResult in
+            if self.page == 1 {
+                self.list = movieResult
+            }else{
+                self.list.results.append(contentsOf: movieResult.results)
+            }
+            self.collectionView.reloadData()
+            
+            if self.page == 1 && self.list.results.count != 0{
+                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
+            
+            if self.list.results.count == 0 {
+                self.emptyView.isHidden = false
+            }else{
+                self.emptyView.isHidden = true
+            }
+        }
+    }
+    
 
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         view.addSubview(searchBar)
         view.addSubview(collectionView)
         
@@ -63,7 +77,7 @@ class SearchViewController: UIViewController {
         emptyView.addSubview(subAnnounceLabel)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         searchBar.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(44)
@@ -92,8 +106,7 @@ class SearchViewController: UIViewController {
         }
     }
     
-    private func configureUI(){
-        view.backgroundColor = .white
+    override func configureUI(){
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.prefetchDataSource = self
@@ -114,64 +127,7 @@ class SearchViewController: UIViewController {
         subAnnounceLabel.font = Constant.Font.secondary
         subAnnounceLabel.textColor = .gray
         subAnnounceLabel.textAlignment = .center
-
     }
-    
-    @objc func backButtonClicked(){
-        dismiss(animated: true)
-    }
-    
-    private func callSearch(_ query: String){
-        
-        var component = URLComponents(string: APIURL.searchURL)
-        let query = URLQueryItem(name: "query", value: "\(query)")
-        let lang = URLQueryItem(name: "language", value: "ko-kr")
-        let page = URLQueryItem(name: "page", value: "\(page)")
-        
-        component?.queryItems = [query, lang, page]
-        
-        guard let url = component?.url else { return }
-        
-        let header: HTTPHeaders = [
-            "Authorization" : APIKey.trendKey,
-            "accept": "application/json"]
-        
-        AF.request(url,
-                   method: .get,
-                   headers: header
-                   )
-        .responseDecodable(of: MovieResult.self) { response in
-            switch response.result {
-            case .success(let value):
-                
-                if self.page == 1 {
-                    self.list = value
-                }else{
-                    self.list.results.append(contentsOf: value.results)
-                }
-                
-                self.collectionView.reloadData()
-                
-                //검색 결과가 없는 경우에는 result = []
-                //검색 결과가 없는 경우에는 scrollToItem되지 않도록 함
-                if self.page == 1 && self.list.results.count != 0{
-                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-                }
-                
-                //결과가 없는 경우에 emptyView 보이도록 지정
-                if self.list.results.count == 0 {
-                    self.emptyView.isHidden = false
-                }else{
-                    self.emptyView.isHidden = true
-                }
-                
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-  
 }
 
 extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
@@ -181,7 +137,7 @@ extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataS
             if list.results.count - 2 == idx.item {
                 page += 1
                 if page <= list.total_pages{
-                    callSearch(query)
+                    callAPI()
                 }
             }
         }
@@ -223,7 +179,7 @@ extension SearchViewController : UISearchBarDelegate {
         if !input.isEmpty && !(input.caseInsensitiveCompare(query) == .orderedSame) {
             query = input
             page = 1
-            callSearch(query)
+            callAPI()
         }
     }
 

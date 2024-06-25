@@ -10,7 +10,7 @@ import Alamofire
 import SnapKit
 
 
-class TrendViewController: UIViewController {
+class TrendViewController: BaseViewController {
     
     let trendTableView = UITableView()
     
@@ -20,40 +20,31 @@ class TrendViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        APIManager.shared.callGenreList{
-            APIManager.shared.callTrend(page: self.page) { trendResult in
-                self.trendResult = trendResult
-                self.trendTableView.reloadData()
-            }
-        }
-        
-        configureHierarchy()
-        configureLayout()
-        configureUI()
+        callAPI()
         configureTableView()
-        
         navigationItem.title = "TREND"
-        let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        backButtonItem.tintColor = Constant.Color.primary
-        navigationItem.backBarButtonItem = backButtonItem
-        
     }
-}
-
-extension TrendViewController {
-    func configureHierarchy(){
+    
+    override func configureHierarchy(){
         view.addSubview(trendTableView)
     }
     
-    func configureLayout(){
+    override func configureLayout(){
         trendTableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
-    func configureUI(){
-        view.backgroundColor = .white
+}
+
+extension TrendViewController {
+    func callAPI(){
+        APIManager.shared.callGenre{
+            APIManager.shared.callTrend(page: self.page) { trendResult in
+                self.trendResult = trendResult
+                self.trendTableView.reloadData()
+            }
+        }
     }
     
     func configureTableView(){

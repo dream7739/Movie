@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class RecommendViewController: UIViewController {
+class RecommendViewController: BaseViewController {
     
     let recommendTableView = UITableView()
     
@@ -18,17 +18,22 @@ class RecommendViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        guard let movieId else { return }
-        
         callAPI()
-        configureHierarchy()
-        configureLayout()
-        configureUI()
         configureTableView()
         
         navigationItem.title = "RECOMMEND"
     }
+    
+    override func configureHierarchy(){
+        view.addSubview(recommendTableView)
+    }
+    
+    override func configureLayout(){
+        recommendTableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
 }
 
 extension RecommendViewController {
@@ -83,20 +88,7 @@ extension RecommendViewController {
         }
     }
     
-    func configureHierarchy(){
-        view.addSubview(recommendTableView)
-    }
-    
-    func configureLayout(){
-        recommendTableView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
-    
-    func configureUI(){
-        view.backgroundColor = .white
-    }
-    
+ 
     func configureTableView(){
         recommendTableView.delegate = self
         recommendTableView.dataSource = self

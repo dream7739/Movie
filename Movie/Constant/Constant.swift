@@ -20,14 +20,14 @@ enum Constant {
     enum Image {
         static let empty = UIImage()
 
-        static let up = UIImage(systemName: "chevron.up")!
-        static let down = UIImage(systemName: "chevron.down")!
-        static let left = UIImage(systemName: "chevron.left")!
-        static let right = UIImage(systemName: "chevron.right")!
-        static let list = UIImage(systemName: "list.bullet")!
-        static let search = UIImage(named: "magnifying-glass")!
-        static let trend = UIImage(named: "popularity")!
+        static let up = UIImage(systemName: "chevron.up")
+        static let down = UIImage(systemName: "chevron.down")
+        static let left = UIImage(systemName: "chevron.left")
+        static let right = UIImage(systemName: "chevron.right")
+        static let list = UIImage(systemName: "list.bullet")
+        static let search = UIImage(systemName: "magnifyingglass")
         static let more = UIImage(systemName: "ellipsis.circle")
+        static let trend = UIImage(systemName: "chart.line.uptrend.xyaxis")
     }
     
     enum Color {
