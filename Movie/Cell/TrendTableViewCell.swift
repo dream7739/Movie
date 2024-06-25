@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class TrendTableViewCell : UITableViewCell {
+class TrendTableViewCell : BaseTableViewCell {
     
     let dateLabel = UILabel()
     let categoryLabel = UILabel()
@@ -25,18 +25,7 @@ class TrendTableViewCell : UITableViewCell {
     let detailLabel = UILabel()
     let detailButton = UIButton()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         contentView.addSubview(dateLabel)
         contentView.addSubview(categoryLabel)
         contentView.addSubview(shadowView)
@@ -53,7 +42,7 @@ class TrendTableViewCell : UITableViewCell {
         trendView.addSubview(detailButton)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         dateLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().offset(20)
         }
@@ -114,7 +103,7 @@ class TrendTableViewCell : UITableViewCell {
         
     }
     
-    private func configureUI(){
+    override func configureUI(){
         dateLabel.textColor = .lightGray
         dateLabel.font = Constant.Font.tertiary
         
@@ -158,7 +147,9 @@ class TrendTableViewCell : UITableViewCell {
         detailButton.tintColor = .gray
         
     }
-    
+}
+
+extension TrendTableViewCell {
     func configureData(_ data: Movie){
         dateLabel.text = data.dateDescription
         
@@ -193,5 +184,5 @@ class TrendTableViewCell : UITableViewCell {
         }
         return genre
     }
-
 }
+

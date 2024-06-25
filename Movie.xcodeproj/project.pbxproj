@@ -34,6 +34,7 @@
 		88B1A6C22C172D7F00E9D6A9 /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */; };
 		88B45B8E2C2AA63D0084BE52 /* RecommendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B45B8D2C2AA63D0084BE52 /* RecommendTableViewCell.swift */; };
 		88B45B932C2ABA700084BE52 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B45B922C2ABA700084BE52 /* BaseViewController.swift */; };
+		88B45B972C2AC03B0084BE52 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B45B962C2AC03B0084BE52 /* BaseTableViewCell.swift */; };
 		88CE85712C29A46F000831E2 /* Poster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CE85702C29A46F000831E2 /* Poster.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		88B1A6C12C172D7F00E9D6A9 /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
 		88B45B8D2C2AA63D0084BE52 /* RecommendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendTableViewCell.swift; sourceTree = "<group>"; };
 		88B45B922C2ABA700084BE52 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		88B45B962C2AC03B0084BE52 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		88CE85702C29A46F000831E2 /* Poster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poster.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				88B45B922C2ABA700084BE52 /* BaseViewController.swift */,
+				88B45B962C2AC03B0084BE52 /* BaseTableViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				8811801B2C29629700BED01F /* APIManager.swift in Sources */,
 				8817AD722C17035F0016B38E /* Constant.swift in Sources */,
 				8817AD682C16FE860016B38E /* Trend.swift in Sources */,
+				88B45B972C2AC03B0084BE52 /* BaseTableViewCell.swift in Sources */,
 				8817AD702C16FFB80016B38E /* ReusableProtocol.swift in Sources */,
 				88576EDC2C18403100352EE1 /* SearchCollectionViewCell.swift in Sources */,
 			);

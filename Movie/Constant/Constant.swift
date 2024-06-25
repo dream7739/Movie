@@ -19,7 +19,6 @@ enum Constant {
     
     enum Image {
         static let empty = UIImage()
-
         static let up = UIImage(systemName: "chevron.up")
         static let down = UIImage(systemName: "chevron.down")
         static let left = UIImage(systemName: "chevron.left")

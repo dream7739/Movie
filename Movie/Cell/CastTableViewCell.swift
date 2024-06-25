@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class CastTableViewCell: UITableViewCell {
+class CastTableViewCell: BaseTableViewCell {
     
     let castImageView = UIImageView()
     
@@ -17,25 +17,14 @@ class CastTableViewCell: UITableViewCell {
     
     let descriptionLabel = UILabel()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         contentView.addSubview(castImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(descriptionLabel)
         
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         castImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(20)
@@ -56,7 +45,7 @@ class CastTableViewCell: UITableViewCell {
         
     }
     
-    private func configureUI(){
+    override func configureUI(){
         castImageView.contentMode = .scaleAspectFill
         
         nameLabel.font = Constant.Font.secondary
@@ -64,7 +53,9 @@ class CastTableViewCell: UITableViewCell {
         descriptionLabel.font = Constant.Font.tertiary
         descriptionLabel.textColor = .lightGray
     }
-    
+}
+
+extension CastTableViewCell {
     func configureData(_ data: Cast){
         nameLabel.text = data.original_name
         
