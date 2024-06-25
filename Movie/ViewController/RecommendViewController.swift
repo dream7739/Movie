@@ -101,7 +101,6 @@ extension RecommendViewController {
         recommendTableView.delegate = self
         recommendTableView.dataSource = self
         recommendTableView.register(RecommendTableViewCell.self, forCellReuseIdentifier: RecommendTableViewCell.identifier)
-        recommendTableView.rowHeight = 240
         recommendTableView.separatorStyle = .none
     }
 }
@@ -124,10 +123,18 @@ extension RecommendViewController: UITableViewDelegate, UITableViewDataSource {
         cell.collectionView.reloadData()
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 || indexPath.row == 1 {
+            return 240
+        }else {
+            return 380
+        }
+    }
 }
 
 
-extension RecommendViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension RecommendViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list[collectionView.tag].count
     }
@@ -147,6 +154,14 @@ extension RecommendViewController: UICollectionViewDataSource, UICollectionViewD
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView.tag == 0 || collectionView.tag == 1 {
+            return CGSize(width: 120, height: 180)
+        }else{
+            return CGSize(width: 200, height: 320)
+        }
     }
     
 }
