@@ -15,21 +15,21 @@ class RecommendViewController: UIViewController {
     let recommendLabel = UILabel()
     
     let posterLabel = UILabel()
-
+    
     lazy var similarCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     lazy var recommendCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     lazy var posterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-
+    
     var movieId: Int?
-
+    
     var similar = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
     
     var recommend = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
     
     var poster = PosterResult(posters: [])
-
+    
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let spacing:CGFloat = 10
@@ -42,23 +42,45 @@ class RecommendViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
         return layout
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         guard let movieId else { return }
-        APIManager.shared.callSimilar(id: movieId, page: 1) { movieResult in
-            self.similar = movieResult
+        
+        let group = DispatchGroup()
+        
+        group.enter()
+        DispatchQueue.global().async {
+            print("--------------1")
+            APIManager.shared.callSimilar(id: movieId, page: 1) { movieResult in
+                self.similar = movieResult
+                group.leave()
+            }
+        }
+        
+        group.enter()
+        DispatchQueue.global().async {
+            print("--------------2")
+            APIManager.shared.callRecommend(id: movieId, page: 1) { movieResult in
+                self.recommend = movieResult
+                group.leave()
+            }
+        }
+        
+        group.enter()
+        DispatchQueue.global().async {
+            print("--------------3")
+            APIManager.shared.callPoster(id: movieId) { posterResult in
+                self.poster = posterResult
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            print("--------------4")
             self.similarCollectionView.reloadData()
-        }
-        
-        APIManager.shared.callRecommend(id: movieId, page: 1) { movieResult in
-            self.recommend = movieResult
             self.recommendCollectionView.reloadData()
-        }
-        
-        APIManager.shared.callPoster(id: movieId) { posterResult in
-            self.poster = posterResult
             self.posterCollectionView.reloadData()
         }
         
@@ -68,7 +90,7 @@ class RecommendViewController: UIViewController {
         configureCollectionView()
         
         navigationItem.title = "RECOMMEND"
-     
+        
     }
 }
 
@@ -147,7 +169,7 @@ extension RecommendViewController {
         posterCollectionView.prefetchDataSource = self
         posterCollectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
         posterCollectionView.showsHorizontalScrollIndicator = false
-
+        
     }
 }
 
@@ -165,7 +187,7 @@ extension RecommendViewController: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.identifier, for: indexPath) as! PosterCollectionViewCell
-      
+        
         if collectionView == similarCollectionView {
             let data = similar.results[indexPath.item]
             cell.configureData(data)
@@ -179,7 +201,7 @@ extension RecommendViewController: UICollectionViewDataSource, UICollectionViewD
         
         return cell
     }
-
+    
 }
 
 extension RecommendViewController: UICollectionViewDataSourcePrefetching {
