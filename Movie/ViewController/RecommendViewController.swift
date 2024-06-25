@@ -10,229 +10,143 @@ import SnapKit
 
 class RecommendViewController: UIViewController {
     
-    let similarLabel = UILabel()
-    
-    let recommendLabel = UILabel()
-    
-    let posterLabel = UILabel()
-    
-    lazy var similarCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-    
-    lazy var recommendCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-    
-    lazy var posterCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    let recommendTableView = UITableView()
     
     var movieId: Int?
     
-    var similar = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
-    
-    var recommend = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
-    
-    var poster = PosterResult(posters: [])
-    
-    func layout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let spacing:CGFloat = 10
-        let inset:CGFloat = 10
-        let width =  (view.bounds.width - (spacing * 2) - (inset * 2)) / 3
-        let height = view.bounds.height / 5
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: width, height: height)
-        layout.minimumLineSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-        return layout
-    }
+    var list: [[ Any ]] = [[], [], []]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         guard let movieId else { return }
         
+        callAPI()
+        configureHierarchy()
+        configureLayout()
+        configureUI()
+        configureTableView()
+        
+        navigationItem.title = "RECOMMEND"
+    }
+}
+
+extension RecommendViewController {
+    enum Section: CaseIterable{
+        case similar
+        case recommend
+        case poster
+        
+        var titleText: String {
+            switch self {
+            case .similar:
+                return "비슷한영화"
+            case .recommend:
+                return "추천영화"
+            case .poster:
+                return "포스터"
+            }
+        }
+    }
+    
+    func callAPI(){
+        guard let movieId else { return }
+
         let group = DispatchGroup()
         
         group.enter()
         DispatchQueue.global().async {
-            print("--------------1")
             APIManager.shared.callSimilar(id: movieId, page: 1) { movieResult in
-                self.similar = movieResult
+                self.list[0] = movieResult.results
                 group.leave()
             }
         }
         
         group.enter()
         DispatchQueue.global().async {
-            print("--------------2")
             APIManager.shared.callRecommend(id: movieId, page: 1) { movieResult in
-                self.recommend = movieResult
+                self.list[1] = movieResult.results
                 group.leave()
             }
         }
         
         group.enter()
         DispatchQueue.global().async {
-            print("--------------3")
             APIManager.shared.callPoster(id: movieId) { posterResult in
-                self.poster = posterResult
+                self.list[2] = posterResult.posters
                 group.leave()
             }
         }
         
         group.notify(queue: .main) {
-            print("--------------4")
-            self.similarCollectionView.reloadData()
-            self.recommendCollectionView.reloadData()
-            self.posterCollectionView.reloadData()
+            self.recommendTableView.reloadData()
         }
-        
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-        configureCollectionView()
-        
-        navigationItem.title = "RECOMMEND"
-        
     }
-}
-
-extension RecommendViewController {
+    
     func configureHierarchy(){
-        view.addSubview(similarLabel)
-        view.addSubview(recommendLabel)
-        view.addSubview(posterLabel)
-        view.addSubview(similarCollectionView)
-        view.addSubview(recommendCollectionView)
-        view.addSubview(posterCollectionView)
+        view.addSubview(recommendTableView)
     }
     
     func configureLayout(){
-        similarLabel.snp.makeConstraints { make in
-            make.top.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
-        }
-        
-        similarCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(similarLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(view.bounds.height / 5 + 20)
-        }
-        
-        recommendLabel.snp.makeConstraints { make in
-            make.top.equalTo(similarCollectionView.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
-        }
-        
-        recommendCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(recommendLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(view.bounds.height / 5 + 20)
-        }
-        
-        posterLabel.snp.makeConstraints { make in
-            make.top.equalTo(recommendCollectionView.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
-        }
-        
-        posterCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(posterLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(view.bounds.height / 5 + 20)
+        recommendTableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
     func configureUI(){
         view.backgroundColor = .white
-        
-        similarLabel.text = "비슷한 영화"
-        similarLabel.font = Constant.Font.primary
-        
-        recommendLabel.text = "추천 영화"
-        recommendLabel.font = Constant.Font.primary
-        
-        posterLabel.text = "포스터"
-        posterLabel.font = Constant.Font.primary
     }
     
-    func configureCollectionView(){
-        similarCollectionView.delegate = self
-        similarCollectionView.dataSource = self
-        similarCollectionView.prefetchDataSource = self
-        similarCollectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
-        similarCollectionView.showsHorizontalScrollIndicator = false
+    func configureTableView(){
+        recommendTableView.delegate = self
+        recommendTableView.dataSource = self
+        recommendTableView.register(RecommendTableViewCell.self, forCellReuseIdentifier: RecommendTableViewCell.identifier)
+        recommendTableView.rowHeight = 240
+        recommendTableView.separatorStyle = .none
+    }
+}
+
+extension RecommendViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return list.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: RecommendTableViewCell.identifier, for: indexPath) as! RecommendTableViewCell
         
-        recommendCollectionView.delegate = self
-        recommendCollectionView.dataSource = self
-        recommendCollectionView.prefetchDataSource = self
-        recommendCollectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
-        recommendCollectionView.showsHorizontalScrollIndicator = false
-        
-        posterCollectionView.delegate = self
-        posterCollectionView.dataSource = self
-        posterCollectionView.prefetchDataSource = self
-        posterCollectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
-        posterCollectionView.showsHorizontalScrollIndicator = false
-        
+        cell.titleLabel.text = RecommendViewController.Section.allCases[indexPath.row].titleText
+        cell.selectionStyle = .none
+
+        cell.collectionView.tag = indexPath.row
+        cell.collectionView.delegate = self
+        cell.collectionView.dataSource = self
+        cell.collectionView.register(PosterCollectionViewCell.self, forCellWithReuseIdentifier: PosterCollectionViewCell.identifier)
+        cell.collectionView.reloadData()
+        return cell
     }
 }
 
 
 extension RecommendViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == similarCollectionView {
-            return similar.results.count
-        }else if collectionView == recommendCollectionView{
-            return recommend.results.count
-        }else{
-            return poster.posters.count
-        }
+        return list[collectionView.tag].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.identifier, for: indexPath) as! PosterCollectionViewCell
         
-        if collectionView == similarCollectionView {
-            let data = similar.results[indexPath.item]
-            cell.configureData(data)
-        }else if collectionView == recommendCollectionView {
-            let data = recommend.results[indexPath.item]
-            cell.configureData(data)
+        
+        if collectionView.tag == 0 || collectionView.tag == 1{
+            if let data = list[collectionView.tag][indexPath.item] as? Movie {
+                cell.configureData(data)
+            }
         }else{
-            let data = poster.posters[indexPath.item]
-            cell.configureData(data)
+            if let data = list[collectionView.tag][indexPath.item] as? Poster {
+                cell.configureData(data)
+            }
         }
         
         return cell
-    }
-    
-}
-
-extension RecommendViewController: UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        if collectionView == similarCollectionView {
-            for idx in indexPaths {
-                if idx.item == similar.results.count - 4 {
-                    similar.page += 1
-                    if similar.page <= similar.total_pages {
-                        guard let movieId else { return }
-                        APIManager.shared.callSimilar(id: movieId, page: similar.page) { movieResult in
-                            self.similar.results.append(contentsOf: movieResult.results)
-                            self.similarCollectionView.reloadData()
-                        }
-                    }
-                }
-            }
-        }else if collectionView == recommendCollectionView {
-            for idx in indexPaths {
-                if idx.item == recommend.results.count - 4 {
-                    recommend.page += 1
-                    if recommend.page <= recommend.total_pages {
-                        guard let movieId else { return }
-                        APIManager.shared.callRecommend(id: movieId, page: recommend.page) { movieResult in
-                            self.recommend.page += 1
-                            self.recommendCollectionView.reloadData()
-                        }
-                    }
-                }
-            }
-        }
     }
     
 }
