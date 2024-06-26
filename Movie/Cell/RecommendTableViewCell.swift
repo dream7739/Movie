@@ -58,6 +58,6 @@ extension RecommendTableViewCell {
     
     func configureUI(){
         collectionView.showsHorizontalScrollIndicator = false
-        titleLabel.font = Constant.Font.heavy
+        titleLabel.font = Constant.Font.primary
     }
 }

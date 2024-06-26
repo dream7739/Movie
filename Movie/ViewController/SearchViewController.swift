@@ -170,6 +170,13 @@ extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataS
         cell.configureData(data)
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = list.results[indexPath.item]
+        let vc = CastViewController()
+        vc.movie = data
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension SearchViewController : UISearchBarDelegate {

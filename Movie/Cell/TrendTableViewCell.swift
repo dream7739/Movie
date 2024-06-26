@@ -11,7 +11,6 @@ import SnapKit
 
 class TrendTableViewCell : BaseTableViewCell {
     
-    let dateLabel = UILabel()
     let categoryLabel = UILabel()
     let shadowView = UIView()
     let trendView = UIView()
@@ -21,13 +20,8 @@ class TrendTableViewCell : BaseTableViewCell {
     let rateValueLabel = UILabel()
     let titleLabel = UILabel()
     let descriptionLabel = UILabel()
-    let seperatorLabel = UILabel()
-    let detailLabel = UILabel()
-    let detailButton = UIButton()
     
     override func configureHierarchy(){
-        contentView.addSubview(dateLabel)
-        contentView.addSubview(categoryLabel)
         contentView.addSubview(shadowView)
         shadowView.addSubview(trendView)
         
@@ -37,25 +31,12 @@ class TrendTableViewCell : BaseTableViewCell {
         rateStackView.addArrangedSubview(rateValueLabel)
         trendView.addSubview(titleLabel)
         trendView.addSubview(descriptionLabel)
-        trendView.addSubview(seperatorLabel)
-        trendView.addSubview(detailLabel)
-        trendView.addSubview(detailButton)
+        trendView.addSubview(categoryLabel)
     }
     
     override func configureLayout(){
-        dateLabel.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().offset(20)
-        }
-        
-        categoryLabel.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom).offset(4)
-            make.leading.equalTo(dateLabel)
-        }
-        
         shadowView.snp.makeConstraints { make in
-             make.top.equalTo(categoryLabel.snp.bottom).offset(12)
-             make.horizontalEdges.equalToSuperview().inset(20)
-             make.height.equalTo(400)
+            make.edges.equalToSuperview().inset(20)
         }
         
         trendView.snp.makeConstraints { make in
@@ -65,7 +46,7 @@ class TrendTableViewCell : BaseTableViewCell {
         moveImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(250)
+            make.height.equalTo(300)
         }
         
         rateStackView.snp.makeConstraints { make in
@@ -80,35 +61,18 @@ class TrendTableViewCell : BaseTableViewCell {
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(2)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(titleLabel)
         }
         
-        seperatorLabel.snp.makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(16)
-            make.horizontalEdges.equalTo(descriptionLabel)
-            make.height.equalTo(1)
-        }
-        
-        detailLabel.snp.makeConstraints { make in
-            make.top.equalTo(seperatorLabel.snp.bottom).offset(16)
-            make.leading.equalTo(seperatorLabel)
-        }
-        
-        detailButton.snp.makeConstraints { make in
-            make.top.equalTo(seperatorLabel.snp.bottom).offset(16)
-            make.trailing.equalTo(seperatorLabel)
-            make.width.height.equalTo(30)
+        categoryLabel.snp.makeConstraints { make in
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(4)
+            make.leading.equalTo(descriptionLabel)
         }
         
     }
     
     override func configureUI(){
-        dateLabel.textColor = .lightGray
-        dateLabel.font = Constant.Font.tertiary
-        
-        categoryLabel.font = Constant.Font.secondary
-        
         shadowView.backgroundColor = .clear
         shadowView.layer.shadowColor = UIColor.black.cgColor
         shadowView.layer.shadowRadius = 5
@@ -133,25 +97,20 @@ class TrendTableViewCell : BaseTableViewCell {
         rateValueLabel.textAlignment = .center
         rateValueLabel.backgroundColor = .white
         
-        titleLabel.font = Constant.Font.primary
+        titleLabel.font = Constant.Font.secondary
         
-        descriptionLabel.font = Constant.Font.secondary
-        descriptionLabel.textColor = .gray
+        descriptionLabel.font = Constant.Font.tertiary
+        descriptionLabel.textColor = Constant.Color.secondary
         descriptionLabel.numberOfLines = 2
         
-        seperatorLabel.backgroundColor = .gray
-        
-        detailLabel.text = "자세히보기"
-        detailLabel.font = Constant.Font.secondary
-        detailButton.setImage(Constant.Image.right, for: .normal)
-        detailButton.tintColor = .gray
-        
+        categoryLabel.font = Constant.Font.tertiary
+        categoryLabel.textColor = Constant.Color.secondary
+
     }
 }
 
 extension TrendTableViewCell {
     func configureData(_ data: Movie){
-        dateLabel.text = data.dateDescription
         
         if let url = data.backDropURL{
             moveImageView.kf.setImage(with: url)

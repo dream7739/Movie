@@ -94,7 +94,6 @@ extension RecommendViewController {
                 case .success(let value):
                     self.list[2] = value.posters
                 case .failure(let error):
-                    print("errorororo")
                     print(error)
                 }
                 group.leave()

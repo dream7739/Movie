@@ -73,7 +73,7 @@ extension TrendViewController {
         trendTableView.delegate = self
         trendTableView.dataSource = self
         trendTableView.prefetchDataSource = self
-        trendTableView.rowHeight = 480
+        trendTableView.rowHeight = 460
         trendTableView.separatorStyle = .none
         
         trendTableView.register(TrendTableViewCell.self, forCellReuseIdentifier: TrendTableViewCell.identifier)
@@ -115,6 +115,7 @@ extension TrendViewController: UITableViewDataSourcePrefetching {
                         switch result {
                         case .success(let value):
                             self.trendResult.results.append(contentsOf: value.results)
+                            self.trendTableView.reloadData()
                         case .failure(let error):
                             print(error)
                         }
