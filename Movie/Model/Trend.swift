@@ -26,21 +26,13 @@ struct Movie: Decodable {
     let vote_average: Double
     
     var backDropURL: URL? {
-        guard let path = backdrop_path,
-              let url = URL(string: APIURL.imgURL + "/\(path)")else{
-            return nil
-        }
-        
-        return url
+        guard let path = backdrop_path else { return nil }
+        return APIRequest.images(path: path).endPoint
     }
     
     var posterURL: URL? {
-        guard let path = poster_path,
-              let url = URL(string: APIURL.imgURL + "/\(path)")else{
-            return nil
-        }
-        
-        return url
+        guard let path = poster_path else { return nil }
+        return APIRequest.images(path: path).endPoint
     }
     
     var rateDescription: String {

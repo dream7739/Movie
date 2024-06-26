@@ -34,10 +34,8 @@ struct Cast: Decodable {
     }
     
     var profileURL: URL? {
-        guard let path = profile_path,
-              let url = URL(string: APIURL.imgURL + "\(path)")else { return nil
-        }
-        return url
+        guard let path = profile_path else { return nil }
+        return APIRequest.images(path: path).endPoint
     }
     
 }

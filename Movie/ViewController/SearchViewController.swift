@@ -47,27 +47,33 @@ class SearchViewController: BaseViewController {
     }
     
     func callAPI(){
-        APIManager.shared.callSearch(page: page, query: query) { movieResult in
-            if self.page == 1 {
-                self.list = movieResult
-            }else{
-                self.list.results.append(contentsOf: movieResult.results)
-            }
-            self.collectionView.reloadData()
-            
-            if self.page == 1 && self.list.results.count != 0{
-                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-            }
-            
-            if self.list.results.count == 0 {
-                self.emptyView.isHidden = false
-            }else{
-                self.emptyView.isHidden = true
+        APIManager.shared.callRequest(request: .search(query: query, page: page)) { (result: Result<MovieResult, AFError>) in
+            switch result {
+            case .success(let value):
+                if self.page == 1 {
+                    self.list = value
+                }else{
+                    self.list.results.append(contentsOf: value.results)
+                }
+                
+                self.collectionView.reloadData()
+                
+                if self.page == 1 && self.list.results.count != 0{
+                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
+                
+                if self.list.results.count == 0 {
+                    self.emptyView.isHidden = false
+                }else{
+                    self.emptyView.isHidden = true
+                }
+            case .failure(let error):
+                print(error)
             }
         }
     }
     
-
+    
     override func configureHierarchy(){
         view.addSubview(searchBar)
         view.addSubview(collectionView)
@@ -182,5 +188,5 @@ extension SearchViewController : UISearchBarDelegate {
             callAPI()
         }
     }
-
+    
 }

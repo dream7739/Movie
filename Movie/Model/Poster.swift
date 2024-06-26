@@ -15,11 +15,7 @@ struct Poster: Decodable {
     let file_path: String?
     
     var posterURL: URL? {
-        guard let path = file_path,
-              let url = URL(string: APIURL.imgURL + "/\(path)")else{
-            return nil
-        }
-        
-        return url
+        guard let path = file_path else { return nil}
+        return APIRequest.images(path: path).endPoint
     }
 }

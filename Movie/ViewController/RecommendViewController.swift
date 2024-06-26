@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 class RecommendViewController: BaseViewController {
     
@@ -56,29 +57,46 @@ extension RecommendViewController {
     
     func callAPI(){
         guard let movieId else { return }
-
+        
         let group = DispatchGroup()
         
         group.enter()
         DispatchQueue.global().async {
-            APIManager.shared.callSimilar(id: movieId, page: 1) { movieResult in
-                self.list[0] = movieResult.results
+            APIManager.shared.callRequest(request: .similar(id: movieId)) { (result: Result<MovieResult, AFError>) in
+                switch result {
+                case .success(let value):
+                    self.list[0] = value.results
+                case .failure(let error):
+                    print(error)
+                }
                 group.leave()
             }
         }
         
         group.enter()
         DispatchQueue.global().async {
-            APIManager.shared.callRecommend(id: movieId, page: 1) { movieResult in
-                self.list[1] = movieResult.results
+            APIManager.shared.callRequest(request: .recommend(id: movieId)) { (result: Result<MovieResult, AFError>) in
+                switch result {
+                case .success(let value):
+                    self.list[1] = value.results
+                case .failure(let error):
+                    print(error)
+                }
                 group.leave()
             }
         }
         
         group.enter()
+        print(APIRequest.poster(id: movieId).endPoint)
         DispatchQueue.global().async {
-            APIManager.shared.callPoster(id: movieId) { posterResult in
-                self.list[2] = posterResult.posters
+            APIManager.shared.callRequest(request: .poster(id: movieId)) { (result: Result<PosterResult, AFError>) in
+                switch result {
+                case .success(let value):
+                    self.list[2] = value.posters
+                case .failure(let error):
+                    print("errorororo")
+                    print(error)
+                }
                 group.leave()
             }
         }
@@ -88,7 +106,7 @@ extension RecommendViewController {
         }
     }
     
- 
+    
     func configureTableView(){
         recommendTableView.delegate = self
         recommendTableView.dataSource = self
@@ -107,7 +125,7 @@ extension RecommendViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.titleLabel.text = RecommendViewController.Section.allCases[indexPath.row].titleText
         cell.selectionStyle = .none
-
+        
         cell.collectionView.tag = indexPath.row
         cell.collectionView.delegate = self
         cell.collectionView.dataSource = self

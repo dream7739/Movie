@@ -88,7 +88,7 @@ class CastViewController: BaseViewController {
         guard let movie else { return }
         
         view.backgroundColor = .white
-
+        
         titleLabel.textColor = .white
         titleLabel.font = Constant.Font.heavy
         titleLabel.text = movie.title
@@ -111,7 +111,7 @@ class CastViewController: BaseViewController {
         }
         
     }
-  
+    
 }
 
 extension CastViewController {
@@ -120,20 +120,23 @@ extension CastViewController {
         case Cast = 1
         
         var title: String {
-           return "\(self)"
+            return "\(self)"
         }
     }
     
     func callAPI(){
-        if let movie{
-            APIManager.shared.callCast(id: movie.id){ castResult in
-                self.list = castResult.cast
+        guard let movie else { return }
+        APIManager.shared.callRequest(request: .cast(id: movie.id)) { (result: Result<CastResult, AFError>) in
+            switch result {
+            case .success(let value):
+                self.list = value.cast
                 self.castTableView.reloadData()
+            case .failure(let error):
+                print(error)
             }
-
         }
     }
-   
+    
     func configureTableView(){
         castTableView.delegate = self
         castTableView.dataSource = self
@@ -181,7 +184,7 @@ extension CastViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: CastTableViewCell.identifier, for: indexPath) as! CastTableViewCell
             cell.configureData(data)
             return cell
-
+            
         }
     }
     

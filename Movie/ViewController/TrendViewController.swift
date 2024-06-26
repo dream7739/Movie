@@ -39,11 +39,33 @@ class TrendViewController: BaseViewController {
 
 extension TrendViewController {
     func callAPI(){
-        APIManager.shared.callGenre{
-            APIManager.shared.callTrend(page: self.page) { trendResult in
-                self.trendResult = trendResult
-                self.trendTableView.reloadData()
+        
+        let group = DispatchGroup()
+        
+        group.enter()
+        APIManager.shared.callRequest(request: .genre) { (result: Result<GenreResult, AFError>) in
+            switch result {
+            case .success(let value):
+                GenreResult.genreList = value.genres
+            case .failure(let error):
+                print(error)
             }
+            group.leave()
+        }
+        
+        group.enter()
+        APIManager.shared.callRequest(request: .trend(page: page)){ (result: Result<MovieResult, AFError>) in
+            switch result {
+            case .success(let value):
+                self.trendResult = value
+            case .failure(let error):
+                print(error)
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: .main){
+            self.trendTableView.reloadData()
         }
     }
     
@@ -89,9 +111,13 @@ extension TrendViewController: UITableViewDataSourcePrefetching {
             if idx.row == trendResult.results.count - 4  {
                 page += 1
                 if page <= trendResult.total_pages {
-                    APIManager.shared.callTrend(page: page) { trendResult in
-                        self.trendResult.results.append(contentsOf: trendResult.results)
-                        self.trendTableView.reloadData()
+                    APIManager.shared.callRequest(request: .trend(page: page)){ (result: Result<MovieResult, AFError>) in
+                        switch result {
+                        case .success(let value):
+                            self.trendResult.results.append(contentsOf: value.results)
+                        case .failure(let error):
+                            print(error)
+                        }
                     }
                 }
             }
