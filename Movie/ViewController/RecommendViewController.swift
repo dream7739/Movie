@@ -61,7 +61,7 @@ extension RecommendViewController {
         let group = DispatchGroup()
         
         group.enter()
-        DispatchQueue.global().async {
+        DispatchQueue.global().async(group: group) {
             APIManager.shared.callRequest(request: .similar(id: movieId)) { (result: Result<MovieResult, AFError>) in
                 switch result {
                 case .success(let value):
@@ -74,7 +74,7 @@ extension RecommendViewController {
         }
         
         group.enter()
-        DispatchQueue.global().async {
+        DispatchQueue.global().async(group: group) {
             APIManager.shared.callRequest(request: .recommend(id: movieId)) { (result: Result<MovieResult, AFError>) in
                 switch result {
                 case .success(let value):
@@ -87,8 +87,7 @@ extension RecommendViewController {
         }
         
         group.enter()
-        print(APIRequest.poster(id: movieId).endPoint)
-        DispatchQueue.global().async {
+        DispatchQueue.global().async(group: group) {
             APIManager.shared.callRequest(request: .poster(id: movieId)) { (result: Result<PosterResult, AFError>) in
                 switch result {
                 case .success(let value):

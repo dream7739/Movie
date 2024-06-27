@@ -20,9 +20,10 @@ class TrendViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        callAPI()
+        callTrendAPI()
         configureTableView()
         navigationItem.title = "TREND"
+        callGenreAPI()
     }
     
     override func configureHierarchy(){
@@ -38,34 +39,33 @@ class TrendViewController: BaseViewController {
 }
 
 extension TrendViewController {
-    func callAPI(){
-        
-        let group = DispatchGroup()
-        
-        group.enter()
-        APIManager.shared.callRequest(request: .genre) { (result: Result<GenreResult, AFError>) in
+    func callGenreAPI(){
+        APIManager.shared.callRequest(request: .genre) { 
+            (result: Result<GenreResult, AFError>) in
             switch result {
             case .success(let value):
                 GenreResult.genreList = value.genres
+                self.callTrendAPI()
             case .failure(let error):
                 print(error)
             }
-            group.leave()
         }
-        
-        group.enter()
-        APIManager.shared.callRequest(request: .trend(page: page)){ (result: Result<MovieResult, AFError>) in
+    }
+    
+    func callTrendAPI(){
+        APIManager.shared.callRequest(request: .trend(page: self.page)){ (
+            result: Result<MovieResult, AFError>) in
             switch result {
             case .success(let value):
-                self.trendResult = value
+                if self.page == 1 {
+                    self.trendResult = value
+                }else{
+                    self.trendResult.results.append(contentsOf: value.results)
+                }
+                self.trendTableView.reloadData()
             case .failure(let error):
                 print(error)
             }
-            group.leave()
-        }
-        
-        group.notify(queue: .main){
-            self.trendTableView.reloadData()
         }
     }
     
@@ -75,7 +75,6 @@ extension TrendViewController {
         trendTableView.prefetchDataSource = self
         trendTableView.rowHeight = 460
         trendTableView.separatorStyle = .none
-        
         trendTableView.register(TrendTableViewCell.self, forCellReuseIdentifier: TrendTableViewCell.identifier)
     }
     
@@ -100,7 +99,6 @@ extension TrendViewController : UITableViewDelegate, UITableViewDataSource {
         let vc = CastViewController()
         vc.movie = data
         navigationController?.pushViewController(vc, animated: true)
-        
         tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
@@ -111,15 +109,7 @@ extension TrendViewController: UITableViewDataSourcePrefetching {
             if idx.row == trendResult.results.count - 4  {
                 page += 1
                 if page <= trendResult.total_pages {
-                    APIManager.shared.callRequest(request: .trend(page: page)){ (result: Result<MovieResult, AFError>) in
-                        switch result {
-                        case .success(let value):
-                            self.trendResult.results.append(contentsOf: value.results)
-                            self.trendTableView.reloadData()
-                        case .failure(let error):
-                            print(error)
-                        }
-                    }
+                    callTrendAPI()
                 }
             }
         }
