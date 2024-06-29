@@ -16,13 +16,16 @@ class MovieTabBarController: UITabBarController {
         
         let trendVC = UINavigationController(rootViewController: TrendViewController())
         let searchVC = UINavigationController(rootViewController: SearchViewController())
+        let latestVC = UINavigationController(rootViewController: LatestViewController())
         
         let trend = UITabBarItem(title: "TREND", image: Constant.Image.trend, tag: 0)
         let search = UITabBarItem(title: "SEARCH", image: Constant.Image.search, tag: 1)
+        let latest = UITabBarItem(title: "NEW&HOT", image: UIImage(systemName: "star"), tag: 2)
         
         trendVC.tabBarItem = trend
         searchVC.tabBarItem = search
-        
-        setViewControllers([trendVC, searchVC], animated: true)
+        latestVC.tabBarItem = latest
+
+        setViewControllers([trendVC, searchVC, latestVC], animated: true)
     }
 }
