@@ -22,11 +22,6 @@ class CategoryCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureUI() {
-        var configuration =  UIButton.Configuration.filled()
-        configuration.cornerStyle = .capsule
-        configuration.baseForegroundColor = .white
-        configuration.baseBackgroundColor = .black
-        configuration.title = "🔥공개 예정"
-        categoryButton.configuration = configuration
+        categoryButton.configuration = .category
     }
 }

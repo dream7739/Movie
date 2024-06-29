@@ -28,6 +28,8 @@
 		8846636A2C30274100E609F7 /* LatestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884663692C30274100E609F7 /* LatestViewController.swift */; };
 		8846636C2C30381200E609F7 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8846636B2C30381200E609F7 /* CategoryCollectionViewCell.swift */; };
 		8846636E2C30384D00E609F7 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8846636D2C30384D00E609F7 /* BaseCollectionViewCell.swift */; };
+		884663702C30410800E609F7 /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8846636F2C30410800E609F7 /* Display.swift */; };
+		884663722C30430F00E609F7 /* UIButton.Configuration+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884663712C30430F00E609F7 /* UIButton.Configuration+Extension.swift */; };
 		88576EDA2C183C6D00352EE1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88576ED92C183C6D00352EE1 /* SearchViewController.swift */; };
 		88576EDC2C18403100352EE1 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88576EDB2C18403100352EE1 /* SearchCollectionViewCell.swift */; };
 		88B1A6BC2C1710FE00E9D6A9 /* CastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */; };
@@ -62,6 +64,8 @@
 		884663692C30274100E609F7 /* LatestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestViewController.swift; sourceTree = "<group>"; };
 		8846636B2C30381200E609F7 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		8846636D2C30384D00E609F7 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		8846636F2C30410800E609F7 /* Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
+		884663712C30430F00E609F7 /* UIButton.Configuration+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton.Configuration+Extension.swift"; sourceTree = "<group>"; };
 		88576ED92C183C6D00352EE1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		88576EDB2C18403100352EE1 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		88B1A6BB2C1710FE00E9D6A9 /* CastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				8817AD712C17035F0016B38E /* Constant.swift */,
+				8846636F2C30410800E609F7 /* Display.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 		88576EE12C18428A00352EE1 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				884663712C30430F00E609F7 /* UIButton.Configuration+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -292,6 +298,7 @@
 				88B1A6C22C172D7F00E9D6A9 /* OverviewTableViewCell.swift in Sources */,
 				8817AD742C1703A30016B38E /* TrendViewController.swift in Sources */,
 				8817AD762C1703E30016B38E /* TrendTableViewCell.swift in Sources */,
+				884663722C30430F00E609F7 /* UIButton.Configuration+Extension.swift in Sources */,
 				88B1A6BC2C1710FE00E9D6A9 /* CastViewController.swift in Sources */,
 				88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */,
 				881180182C2954EB00BED01F /* MovieTabBarController.swift in Sources */,
@@ -300,6 +307,7 @@
 				8817AD432C16FC870016B38E /* AppDelegate.swift in Sources */,
 				8846636E2C30384D00E609F7 /* BaseCollectionViewCell.swift in Sources */,
 				881180212C29854B00BED01F /* RecommendViewController.swift in Sources */,
+				884663702C30410800E609F7 /* Display.swift in Sources */,
 				8817AD642C16FE540016B38E /* APIKey.swift in Sources */,
 				88B45B932C2ABA700084BE52 /* BaseViewController.swift in Sources */,
 				88576EDA2C183C6D00352EE1 /* SearchViewController.swift in Sources */,

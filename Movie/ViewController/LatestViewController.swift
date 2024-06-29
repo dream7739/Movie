@@ -20,7 +20,7 @@ class LatestViewController: BaseViewController {
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        layout.itemSize = CGSize(width: (view.bounds.width - 40) / 3, height: 40)
+        layout.scrollDirection = .horizontal
         return layout
     }
     
@@ -56,20 +56,32 @@ extension LatestViewController{
     func configureCollectionView(){
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
+        collectionView.register(
+            CategoryCollectionViewCell.self,
+            forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier
+        )
+        collectionView.showsHorizontalScrollIndicator = false
     }
 }
 
-extension LatestViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension LatestViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let button = UIButton()
+        button.configuration = .category
+        button.configuration?.title = Display.LatestCategory.allCases[indexPath.item].rawValue
+        let size = button.intrinsicContentSize
+        return size
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return Display.LatestCategory.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print(#function)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as? CategoryCollectionViewCell else {
             return UICollectionViewCell()
         }
+        cell.categoryButton.configuration?.title = Display.LatestCategory.allCases[indexPath.item].rawValue
         return cell
     }
     
