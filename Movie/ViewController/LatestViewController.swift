@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import SkeletonView
 import SnapKit
 
 class LatestViewController: BaseViewController {
@@ -34,7 +35,11 @@ class LatestViewController: BaseViewController {
         
         callUpcoming()
         
+        latestTableView.isSkeletonable = true
+        latestTableView.showSkeleton()
+        
         group.notify(queue: .main){
+            self.latestTableView.hideSkeleton()
             self.latestTableView.reloadData()
         }
         
@@ -87,7 +92,6 @@ extension LatestViewController{
         DispatchQueue.global().async(group: group){
             APIManager.shared.callRequest(request: .upcoming(page: self.page)) {
                 (result: Result<MovieResult, AFError>) in
-                self.group.leave()
                 switch result {
                 case .success(let value):
                     if self.page == 1 {
@@ -95,11 +99,11 @@ extension LatestViewController{
                     }else{
                         self.movieResult.results.append(contentsOf: value.results)
                     }
-                    
                     self.callImage(movie: value.results)
                 case .failure(let error):
                     print(error)
                 }
+                self.group.leave()
             }
         }
     }
@@ -110,7 +114,6 @@ extension LatestViewController{
         DispatchQueue.global().async(group: group){
             APIManager.shared.callRequest(request: .popular(page: self.page)) {
                 (result: Result<MovieResult, AFError>) in
-                self.group.leave()
                 switch result {
                 case .success(let value):
                     if self.page == 1 {
@@ -118,11 +121,11 @@ extension LatestViewController{
                     }else{
                         self.movieResult.results.append(contentsOf: value.results)
                     }
-                    
                     self.callImage(movie: value.results)
                 case .failure(let error):
                     print(error)
                 }
+                self.group.leave()
             }
         }
     }
@@ -133,7 +136,6 @@ extension LatestViewController{
         DispatchQueue.global().async(group: group){
             APIManager.shared.callRequest(request: .nowPlaying(page: self.page)) {
                 (result: Result<MovieResult, AFError>) in
-                self.group.leave()
                 switch result {
                 case .success(let value):
                     if self.page == 1 {
@@ -141,11 +143,11 @@ extension LatestViewController{
                     }else{
                         self.movieResult.results.append(contentsOf: value.results)
                     }
-                    
                     self.callImage(movie: value.results)
                 case .failure(let error):
                     print(error)
                 }
+                self.group.leave()
             }
         }
     }
@@ -158,13 +160,13 @@ extension LatestViewController{
             group.enter()
             APIManager.shared.callRequest(request: .poster(id: self.movieResult.results[idx].id)) {
                 (result: Result<ImageResult, AFError>) in
-                self.group.leave()
                 switch result {
                 case .success(let value):
                     self.movieResult.results[idx].logo_path = value.logos.first?.file_path
                 case .failure(let error):
                     print(error)
                 }
+                self.group.leave()
             }
         }
     }
@@ -227,7 +229,20 @@ extension LatestViewController: UICollectionViewDelegateFlowLayout, UICollection
     
 }
 
-extension LatestViewController: UITableViewDelegate, UITableViewDataSource {
+extension LatestViewController: UITableViewDelegate, SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return TrendTableViewCell.identifier
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, skeletonCellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+        return skeletonView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: indexPath)
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return  UITableView.automaticNumberOfSkeletonRows
+
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movieResult.results.count
     }

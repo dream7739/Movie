@@ -7,8 +7,8 @@
 
 import UIKit
 import Alamofire
+import SkeletonView
 import SnapKit
-
 
 class TrendViewController: BaseViewController {
     
@@ -29,7 +29,11 @@ class TrendViewController: BaseViewController {
         callGenre()
         callTrend()
         
+        trendTableView.isSkeletonable = true
+        trendTableView.showSkeleton()
+
         group.notify(queue: .main) {
+            self.trendTableView.hideSkeleton()
             self.trendTableView.reloadData()
         }
     }
@@ -71,21 +75,23 @@ extension TrendViewController {
     @objc func searchButtonClicked(){
         navigationController?.pushViewController(SearchViewController(), animated: true)
     }
+    
+    
 }
 
 extension TrendViewController {
     func callGenre(){
         group.enter()
         DispatchQueue.global().async(group: group) {
-            APIManager.shared.callRequest(request: .genre) {
+           APIManager.shared.callRequest(request: .genre) {
                 (result: Result<GenreResult, AFError>) in
-                self.group.leave()
                 switch result {
                 case .success(let value):
                     GenreResult.genreList = value.genres
                 case .failure(let error):
                     print(error)
                 }
+                self.group.leave()
             }
         }
     }
@@ -95,7 +101,6 @@ extension TrendViewController {
         DispatchQueue.global().async(group: group) {
             APIManager.shared.callRequest(request: .trend(page: self.page)){ (
                 result: Result<MovieResult, AFError>) in
-                self.group.leave()
                 switch result {
                 case .success(let value):
                     if self.page == 1 {
@@ -103,11 +108,11 @@ extension TrendViewController {
                     }else{
                         self.trendResult.results.append(contentsOf: value.results)
                     }
-                    
                     self.callImageAPI(movie: value.results)
                 case .failure(let error):
                     print(error)
                 }
+                self.group.leave()
             }
         }
     }
@@ -118,14 +123,16 @@ extension TrendViewController {
         
         for idx in start..<end {
             group.enter()
-            APIManager.shared.callRequest(request: .poster(id: self.trendResult.results[idx].id)) {
-                (result: Result<ImageResult, AFError>) in
-                self.group.leave()
-                switch result {
-                case .success(let value):
-                    self.trendResult.results[idx].logo_path = value.logos.first?.file_path
-                case .failure(let error):
-                    print(error)
+            DispatchQueue.global().async(group: group) {
+                APIManager.shared.callRequest(request: .poster(id: self.trendResult.results[idx].id)) {
+                    (result: Result<ImageResult, AFError>) in
+                    switch result {
+                    case .success(let value):
+                        self.trendResult.results[idx].logo_path = value.logos.first?.file_path
+                    case .failure(let error):
+                        print(error)
+                    }
+                    self.group.leave()
                 }
             }
         }
@@ -133,7 +140,21 @@ extension TrendViewController {
     
 }
 
-extension TrendViewController : UITableViewDelegate, UITableViewDataSource {
+extension TrendViewController : UITableViewDelegate, SkeletonTableViewDataSource {
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return TrendTableViewCell.identifier
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, skeletonCellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+        return skeletonView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: indexPath)
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return  UITableView.automaticNumberOfSkeletonRows
+
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trendResult.results.count
     }

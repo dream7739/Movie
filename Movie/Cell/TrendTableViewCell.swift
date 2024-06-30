@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SkeletonView
 import SnapKit
 
 class TrendTableViewCell : BaseTableViewCell {
@@ -23,7 +24,7 @@ class TrendTableViewCell : BaseTableViewCell {
     let logoImage = UIImageView()
     let descriptionLabel = UILabel()
     let categoryLabel = UILabel()
-    
+        
     override func configureHierarchy(){
         contentView.addSubview(stackView)
         
@@ -93,6 +94,20 @@ class TrendTableViewCell : BaseTableViewCell {
     }
     
     override func configureUI(){
+        self.isSkeletonable = true
+        self.stackView.isSkeletonable = true
+        self.dateView.isSkeletonable = true
+        self.trendView.isSkeletonable = true
+        self.dateLabel.isSkeletonable = true
+        self.backdropImage.isSkeletonable = true
+        self.rateStackView.isSkeletonable = true
+        self.rateLabel.isSkeletonable = true
+        self.rateValueLabel.isSkeletonable = true
+        self.titleLabel.isSkeletonable = true
+        self.logoImage.isSkeletonable = true
+        self.descriptionLabel.isSkeletonable = true
+        self.categoryLabel.isSkeletonable = true
+
         stackView.axis = .horizontal
         stackView.spacing = 5
         
@@ -171,6 +186,7 @@ extension TrendTableViewCell {
         rateValueLabel.text = data.rateDescription
         
         if let url = data.logoURL{
+            logoImage.kf.indicatorType = .activity
             logoImage.kf.setImage(with: url)
         }else{
             logoImage.backgroundColor = Constant.Color.empty
