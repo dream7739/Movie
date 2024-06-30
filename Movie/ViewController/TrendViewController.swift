@@ -26,11 +26,7 @@ class TrendViewController: BaseViewController {
         super.viewDidLoad()
         configureTableView()
         navigationItem.title = "TREND"
-        
-        //1. 장르 API 호출
-        //2. 트랜드 API 호출
-        //3. 두 개가 완료되면 TableView 리로드
-        //장르가 없으면 영화 장르 표시가 불가능하기 때문에 둘 다 완료되었을 때 reload
+
         callGenreAPI()
         callTrendAPI()
         
@@ -81,7 +77,7 @@ extension TrendViewController {
                     }else{
                         self.trendResult.results.append(contentsOf: value.results)
                     }
-                    //로고 이미지를 받아옴
+                    
                     self.callImageAPI(movie: value.results)
                 case .failure(let error):
                     print(error)
@@ -90,16 +86,12 @@ extension TrendViewController {
         }
     }
     
-    //영화 결과를 받아와서, 그 결과를 토대로 로고이미지를 가져옴
     func callImageAPI(movie: [Movie]){
-        
-        //0-19, 20-39
         let start = (page - 1) * 20
         let end = trendResult.results.count
         
         for idx in start..<end {
             group.enter()
-            
             APIManager.shared.callRequest(request: .poster(id: self.trendResult.results[idx].id)) {
                 (result: Result<ImageResult, AFError>) in
                 self.group.leave()
@@ -117,7 +109,7 @@ extension TrendViewController {
         trendTableView.delegate = self
         trendTableView.dataSource = self
         trendTableView.prefetchDataSource = self
-        trendTableView.rowHeight = 430
+        trendTableView.rowHeight = Display.rowHeight
         trendTableView.separatorStyle = .none
         trendTableView.register(TrendTableViewCell.self, forCellReuseIdentifier: TrendTableViewCell.identifier)
     }

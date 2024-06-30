@@ -6,14 +6,20 @@
 //
 
 import UIKit
+import Alamofire
 import SnapKit
 
-//현재 상영중인 영화, 현재 인기있는 영화, 곧 개봉할 영화 3가지로 정보를 나누어 보여줄 것
 class LatestViewController: BaseViewController {
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
-    let tableView = UITableView()
     
-    var result: MovieResult = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    
+    let latestTableView = UITableView()
+    
+    let group = DispatchGroup()
+    
+    var page = 1
+
+    var movieResult = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
     
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -26,13 +32,21 @@ class LatestViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "NEW & HOT"
         configureCollectionView()
+        configureTableView()
+        navigationItem.title = "NEW & HOT"
+        
+        callUpcoming()
+        
+        group.notify(queue: .main){
+            self.latestTableView.reloadData()
+        }
+        
     }
     
     override func configureHierarchy() {
         view.addSubview(collectionView)
-        view.addSubview(tableView)
+        view.addSubview(latestTableView)
     }
     
     override func configureLayout() {
@@ -41,15 +55,12 @@ class LatestViewController: BaseViewController {
             make.height.equalTo(50)
         }
         
-        tableView.snp.makeConstraints { make in
+        latestTableView.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
-    override func configureUI() {
-        tableView.backgroundColor = .black
-    }
 }
 
 extension LatestViewController{
@@ -61,6 +72,56 @@ extension LatestViewController{
             forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier
         )
         collectionView.showsHorizontalScrollIndicator = false
+    }
+    
+    func configureTableView(){
+        latestTableView.delegate = self
+        latestTableView.dataSource = self
+        latestTableView.prefetchDataSource = self
+        latestTableView.register(TrendTableViewCell.self, forCellReuseIdentifier: TrendTableViewCell.identifier)
+        latestTableView.rowHeight = Display.rowHeight
+        latestTableView.separatorStyle = .none
+    }
+    
+    func callUpcoming(){
+        group.enter()
+        DispatchQueue.global().async(group: group){
+            APIManager.shared.callRequest(request: .upcoming(page: self.page)) {
+                (result: Result<MovieResult, AFError>) in
+                self.group.leave()
+                switch result {
+                case .success(let value):
+                    if self.page == 1 {
+                        self.movieResult = value
+                    }else{
+                        self.movieResult.results.append(contentsOf: value.results)
+                    }
+                    
+                    self.callImage(movie: value.results)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    func callImage(movie: [Movie]){
+        let start = (page - 1) * 20
+        let end = movieResult.results.count
+        
+        for idx in start..<end {
+            group.enter()
+            APIManager.shared.callRequest(request: .poster(id: self.movieResult.results[idx].id)) {
+                (result: Result<ImageResult, AFError>) in
+                self.group.leave()
+                switch result {
+                case .success(let value):
+                    self.movieResult.results[idx].logo_path = value.logos.first?.file_path
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
     }
 }
 
@@ -84,6 +145,42 @@ extension LatestViewController: UICollectionViewDelegateFlowLayout, UICollection
         cell.categoryButton.configuration?.title = Display.LatestCategory.allCases[indexPath.item].rawValue
         return cell
     }
+}
+
+extension LatestViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return movieResult.results.count
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: indexPath) as? TrendTableViewCell else { return UITableViewCell() }
+        let data = movieResult.results[indexPath.row]
+        cell.dateView.isHidden = false
+        cell.configureData(data)
+        return cell
+    }
+}
+
+extension LatestViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        for idx in indexPaths {
+            if idx.row == movieResult.results.count - 4  {
+                page += 1
+                if page <= movieResult.total_pages {
+                    callUpcoming()
+                    
+                    group.notify(queue: .main){
+                        self.latestTableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
     
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        for idx in indexPaths {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: idx) as? TrendTableViewCell else { return }
+            cell.cancelDownload()
+        }
+    }
 }

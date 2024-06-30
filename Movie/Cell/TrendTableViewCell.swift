@@ -12,12 +12,10 @@ import SnapKit
 class TrendTableViewCell : BaseTableViewCell {
     
     let stackView = UIStackView()
-    
     let dateView = UIView()
     let trendView = UIView()
-
     let dateLabel = UILabel()
-    let moveImageView = UIImageView()
+    let backdropImage = UIImageView()
     let rateStackView = UIStackView()
     let rateLabel = UILabel()
     let rateValueLabel = UILabel()
@@ -34,7 +32,7 @@ class TrendTableViewCell : BaseTableViewCell {
         
         dateView.addSubview(dateLabel)
         
-        trendView.addSubview(moveImageView)
+        trendView.addSubview(backdropImage)
         trendView.addSubview(rateStackView)
         rateStackView.addArrangedSubview(rateLabel)
         rateStackView.addArrangedSubview(rateValueLabel)
@@ -58,28 +56,28 @@ class TrendTableViewCell : BaseTableViewCell {
             make.top.leading.equalToSuperview()
         }
         
-        moveImageView.snp.makeConstraints { make in
+        backdropImage.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.horizontalEdges.equalToSuperview()
             make.height.equalTo(200)
         }
         
         rateStackView.snp.makeConstraints { make in
-            make.leading.bottom.equalTo(moveImageView).inset(20)
+            make.leading.bottom.equalTo(backdropImage).inset(20)
             make.width.equalTo(70)
             make.height.equalTo(25)
         }
         
         logoImage.snp.makeConstraints { make in
-            make.top.equalTo(moveImageView.snp.bottom).offset(12)
-            make.leading.equalTo(moveImageView)
+            make.top.equalTo(backdropImage.snp.bottom).offset(12)
+            make.leading.equalTo(backdropImage).inset(15)
             make.width.equalTo(180)
             make.height.equalTo(50)
         }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(logoImage.snp.bottom).offset(12)
-            make.horizontalEdges.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(15)
         }
         
         descriptionLabel.snp.makeConstraints { make in
@@ -101,13 +99,14 @@ class TrendTableViewCell : BaseTableViewCell {
         
         dateLabel.numberOfLines = 0
         dateLabel.textAlignment = .center
-        dateLabel.text = "7월\n19"
         
         trendView.backgroundColor = .white
+        trendView.layer.borderColor = UIColor.lightGray.cgColor
+        trendView.layer.borderWidth = 0.5
         trendView.layer.cornerRadius = 10
         trendView.clipsToBounds = true
         
-        moveImageView.contentMode = .scaleAspectFill
+        backdropImage.contentMode = .scaleAspectFill
         
         rateStackView.axis = .horizontal
         rateStackView.distribution = .fillEqually
@@ -133,15 +132,37 @@ class TrendTableViewCell : BaseTableViewCell {
         categoryLabel.textColor = Constant.Color.secondary
 
     }
+    
+    override func prepareForReuse() {
+        backdropImage.image = nil
+        logoImage.image = nil
+    }
 }
 
 extension TrendTableViewCell {
     func configureData(_ data: Movie){
+
+        if !dateView.isHidden {
+            let date = data.dateDescription
+            
+            if let idx = date.firstIndex(of: "월") {
+                let attributedString = NSMutableAttributedString(string: date)
+                let secondIdx = date.index(after: idx)
+                let range = NSRange(secondIdx..<date.endIndex, in: date)
+                attributedString.addAttributes(
+                    [.font : UIFont.systemFont(ofSize: 25, weight: .heavy)],
+                    range: range
+                )
+                dateLabel.attributedText = attributedString
+            }else{
+                dateLabel.text = date
+            }
+        }
         
         if let url = data.backDropURL{
-            moveImageView.kf.setImage(with: url)
+            backdropImage.kf.setImage(with: url)
         }else{
-            moveImageView.backgroundColor = Constant.Color.empty
+            backdropImage.backgroundColor = Constant.Color.empty
         }
         
         rateLabel.text = "평점"
@@ -167,7 +188,11 @@ extension TrendTableViewCell {
         var filteredGenre: [String] = []
         
         for id in genreIds {
-            filteredGenre += GenreResult.genreList.filter{ $0.id == id}.map{ $0.name }
+            filteredGenre += GenreResult.genreList.filter{
+                $0.id == id
+            }.map{
+                $0.name
+            }
         }
         
         for name in filteredGenre {
@@ -176,7 +201,15 @@ extension TrendTableViewCell {
                 genre += " ᐧ "
             }
         }
+        
         return genre
     }
+    
+    func cancelDownload(){
+        logoImage.kf.cancelDownloadTask()
+        backdropImage.kf.cancelDownloadTask()
+    }
+    
+    
 }
 
