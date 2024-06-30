@@ -18,7 +18,9 @@ class LatestViewController: BaseViewController {
     let group = DispatchGroup()
     
     var page = 1
-
+    
+    var selectedIndex: Int = 0
+    
     var movieResult = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
     
     func layout() -> UICollectionViewLayout {
@@ -83,10 +85,57 @@ extension LatestViewController{
         latestTableView.separatorStyle = .none
     }
     
+    //개봉 예정
     func callUpcoming(){
         group.enter()
         DispatchQueue.global().async(group: group){
             APIManager.shared.callRequest(request: .upcoming(page: self.page)) {
+                (result: Result<MovieResult, AFError>) in
+                self.group.leave()
+                switch result {
+                case .success(let value):
+                    if self.page == 1 {
+                        self.movieResult = value
+                    }else{
+                        self.movieResult.results.append(contentsOf: value.results)
+                    }
+                    
+                    self.callImage(movie: value.results)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    //인기
+    func callPopular(){
+        group.enter()
+        DispatchQueue.global().async(group: group){
+            APIManager.shared.callRequest(request: .popular(page: self.page)) {
+                (result: Result<MovieResult, AFError>) in
+                self.group.leave()
+                switch result {
+                case .success(let value):
+                    if self.page == 1 {
+                        self.movieResult = value
+                    }else{
+                        self.movieResult.results.append(contentsOf: value.results)
+                    }
+                    
+                    self.callImage(movie: value.results)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    //현재 상영중
+    func callNowPlaying(){
+        group.enter()
+        DispatchQueue.global().async(group: group){
+            APIManager.shared.callRequest(request: .nowPlaying(page: self.page)) {
                 (result: Result<MovieResult, AFError>) in
                 self.group.leave()
                 switch result {
@@ -143,8 +192,43 @@ extension LatestViewController: UICollectionViewDelegateFlowLayout, UICollection
             return UICollectionViewCell()
         }
         cell.categoryButton.configuration?.title = Display.LatestCategory.allCases[indexPath.item].rawValue
+        cell.categoryButton.tag = indexPath.item
+        cell.categoryButton.addTarget(self, action: #selector(categoryButtonClicked), for: .touchUpInside)
         return cell
     }
+    
+    @objc func categoryButtonClicked(_ sender : UIButton){
+        if selectedIndex == sender.tag { return }
+        switch sender.tag {
+        case 0:
+            selectedIndex = sender.tag
+            page = 1
+            callUpcoming()
+            group.notify(queue: .main){
+                self.latestTableView.reloadData()
+                self.latestTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
+        case 1:
+            selectedIndex = sender.tag
+            page = 1
+            callPopular()
+            group.notify(queue: .main){
+                self.latestTableView.reloadData()
+                self.latestTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
+        case 2:
+            selectedIndex = sender.tag
+            page = 1
+            callNowPlaying()
+            group.notify(queue: .main){
+                self.latestTableView.reloadData()
+                self.latestTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
+        default:
+            print("invalid indexPath item")
+        }
+    }
+    
 }
 
 extension LatestViewController: UITableViewDelegate, UITableViewDataSource {
@@ -155,7 +239,14 @@ extension LatestViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TrendTableViewCell.identifier, for: indexPath) as? TrendTableViewCell else { return UITableViewCell() }
         let data = movieResult.results[indexPath.row]
-        cell.dateView.isHidden = false
+        
+        if selectedIndex == 0 {
+            cell.dateView.isHidden = false
+        }else{
+            cell.dateView.isHidden = true
+        }
+        
+        cell.selectionStyle = .none
         cell.configureData(data)
         return cell
     }

@@ -18,6 +18,8 @@ enum APIRequest{
     case recommend(id: Int)
     case poster(id: Int)
     case upcoming(page: Int)
+    case popular(page: Int)
+    case nowPlaying(page:Int)
     
     var baseURL: String {
         return "https://api.themoviedb.org/3/"
@@ -47,6 +49,11 @@ enum APIRequest{
             return URL(string: baseURL + "movie/\(id)/images")!
         case .upcoming:
             return URL(string: baseURL + "movie/upcoming")!
+        case .popular:
+            return URL(string: baseURL + "movie/popular")!
+        case .nowPlaying:
+            return URL(string: baseURL + "movie/now_playing")!
+
         }
     }
     
@@ -57,7 +64,7 @@ enum APIRequest{
     
     var param: Parameters {
         switch self {
-        case .trend(let page), .upcoming(let page):
+        case .trend(let page), .upcoming(let page), .popular(let page), .nowPlaying(let page):
             return ["language" : "ko-kr",
                     "page": page]
         case .images, .genre, .cast, .similar, .recommend:

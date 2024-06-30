@@ -48,7 +48,7 @@ class TrendTableViewCell : BaseTableViewCell {
         }
         
         dateView.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.15)
+            make.width.equalToSuperview().multipliedBy(0.1)
         }
 
         dateLabel.snp.makeConstraints { make in
@@ -94,6 +94,7 @@ class TrendTableViewCell : BaseTableViewCell {
     
     override func configureUI(){
         stackView.axis = .horizontal
+        stackView.spacing = 5
         
         dateView.isHidden = true
         
