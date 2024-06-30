@@ -88,7 +88,7 @@ extension RecommendViewController {
         
         group.enter()
         DispatchQueue.global().async(group: group) {
-            APIManager.shared.callRequest(request: .poster(id: movieId)) { (result: Result<PosterResult, AFError>) in
+            APIManager.shared.callRequest(request: .poster(id: movieId)) { (result: Result<ImageResult, AFError>) in
                 switch result {
                 case .success(let value):
                     self.list[2] = value.posters
@@ -156,7 +156,7 @@ extension RecommendViewController: UICollectionViewDataSource, UICollectionViewD
                 cell.configureData(data)
             }
         }else{
-            if let data = list[collectionView.tag][indexPath.item] as? Poster {
+            if let data = list[collectionView.tag][indexPath.item] as? Image {
                 cell.configureData(data)
             }
         }

@@ -1,5 +1,5 @@
 //
-//  Poster.swift
+//  Image.swift
 //  Movie
 //
 //  Created by 홍정민 on 6/24/24.
@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct PosterResult: Decodable {
-    let posters: [Poster]
+struct ImageResult: Decodable {
+    let logos: [Image]
+    let posters: [Image]
 }
 
-struct Poster: Decodable {
+struct Image: Decodable {
     let file_path: String?
     
     var posterURL: URL? {

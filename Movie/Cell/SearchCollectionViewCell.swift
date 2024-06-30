@@ -70,7 +70,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configureData(_ data: Poster){
+    func configureData(_ data: Image){
         if let url = data.posterURL {
             posterImageView.kf.indicatorType = .activity
             posterImageView.kf.setImage(with: url)

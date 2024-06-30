@@ -24,6 +24,7 @@ struct Movie: Decodable {
     let genre_ids: [Int]
     let release_date: String
     let vote_average: Double
+    var logo_path: String?
     
     var backDropURL: URL? {
         guard let path = backdrop_path else { return nil }
@@ -32,6 +33,11 @@ struct Movie: Decodable {
     
     var posterURL: URL? {
         guard let path = poster_path else { return nil }
+        return APIRequest.images(path: path).endPoint
+    }
+    
+    var logoURL: URL? {
+        guard let path = logo_path else { return nil }
         return APIRequest.images(path: path).endPoint
     }
     
