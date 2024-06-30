@@ -261,6 +261,13 @@ extension LatestViewController: UITableViewDelegate, SkeletonTableViewDataSource
         cell.configureData(data)
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = movieResult.results[indexPath.row]
+        let vc = CastViewController()
+        vc.movie = data
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension LatestViewController: UITableViewDataSourcePrefetching {
