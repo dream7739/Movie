@@ -27,8 +27,8 @@ class TrendViewController: BaseViewController {
         configureTableView()
         navigationItem.title = "TREND"
 
-        callGenreAPI()
-        callTrendAPI()
+        callGenre()
+        callTrend()
         
         group.notify(queue: .main) {
             self.trendTableView.reloadData()
@@ -48,7 +48,7 @@ class TrendViewController: BaseViewController {
 }
 
 extension TrendViewController {
-    func callGenreAPI(){
+    func callGenre(){
         group.enter()
         DispatchQueue.global().async(group: group) {
             APIManager.shared.callRequest(request: .genre) {
@@ -64,7 +64,7 @@ extension TrendViewController {
         }
     }
     
-    func callTrendAPI(){
+    func callTrend(){
         group.enter()
         DispatchQueue.global().async(group: group) {
             APIManager.shared.callRequest(request: .trend(page: self.page)){ (
@@ -145,7 +145,7 @@ extension TrendViewController: UITableViewDataSourcePrefetching {
             if idx.row == trendResult.results.count - 4  {
                 page += 1
                 if page <= trendResult.total_pages {
-                    callTrendAPI()
+                    callTrend()
                     
                     group.notify(queue: .main){
                         self.trendTableView.reloadData()

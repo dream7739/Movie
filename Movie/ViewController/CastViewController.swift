@@ -30,7 +30,7 @@ class CastViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        callAPI()
+        callCast()
         configureTableView()
         
         navigationItem.title = movie?.title
@@ -124,7 +124,7 @@ extension CastViewController {
         }
     }
     
-    func callAPI(){
+    func callCast(){
         guard let movie else { return }
         APIManager.shared.callRequest(request: .cast(id: movie.id)) { (result: Result<CastResult, AFError>) in
             switch result {

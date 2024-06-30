@@ -11,7 +11,10 @@ import SnapKit
 
 class LatestViewController: BaseViewController {
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: CustomLayout.category()
+    )
     
     let latestTableView = UITableView()
     
@@ -22,15 +25,6 @@ class LatestViewController: BaseViewController {
     var selectedIndex: Int = 0
     
     var movieResult = MovieResult(page: 1, results: [], total_pages: 0, total_results: 0)
-    
-    func layout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        layout.scrollDirection = .horizontal
-        return layout
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -46,8 +46,6 @@ struct Movie: Decodable {
     }
     
     var dateDescription: String {
-        //date가 올바른 형식이면 M월 dd일로 변환해서 return
-        //date가 올바른 형식이 아니면 원본 그대로 return
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let date = formatter.date(from: release_date)

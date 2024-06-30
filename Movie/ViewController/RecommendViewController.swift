@@ -15,11 +15,11 @@ class RecommendViewController: BaseViewController {
     
     var movieId: Int?
     
-    var list: [[ Any ]] = [[], [], []]
+    var list: [[Any]] = [[], [], []]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        callAPI()
+        callRecommend()
         configureTableView()
         
         navigationItem.title = "RECOMMEND"
@@ -55,7 +55,7 @@ extension RecommendViewController {
         }
     }
     
-    func callAPI(){
+    func callRecommend(){
         guard let movieId else { return }
         
         let group = DispatchGroup()

@@ -41,6 +41,7 @@
 		88B45B972C2AC03B0084BE52 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B45B962C2AC03B0084BE52 /* BaseTableViewCell.swift */; };
 		88CE85712C29A46F000831E2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CE85702C29A46F000831E2 /* Image.swift */; };
 		88D091B92C2C151A0076277C /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D091B82C2C151A0076277C /* APIRequest.swift */; };
+		88D37FA42C31610400C6D35C /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D37FA32C31610400C6D35C /* CustomLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +78,7 @@
 		88B45B962C2AC03B0084BE52 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		88CE85702C29A46F000831E2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		88D091B82C2C151A0076277C /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		88D37FA32C31610400C6D35C /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 			children = (
 				8817AD712C17035F0016B38E /* Constant.swift */,
 				8846636F2C30410800E609F7 /* Display.swift */,
+				88D37FA32C31610400C6D35C /* CustomLayout.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				88B1A6BC2C1710FE00E9D6A9 /* CastViewController.swift in Sources */,
 				88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */,
 				881180182C2954EB00BED01F /* MovieTabBarController.swift in Sources */,
+				88D37FA42C31610400C6D35C /* CustomLayout.swift in Sources */,
 				88B45B8E2C2AA63D0084BE52 /* RecommendTableViewCell.swift in Sources */,
 				8811801D2C29696100BED01F /* Genre.swift in Sources */,
 				8817AD432C16FC870016B38E /* AppDelegate.swift in Sources */,

@@ -14,7 +14,10 @@ class SearchViewController: BaseViewController {
     
     let searchBar = UISearchBar()
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+    lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: CustomLayout.poster(direction: .vertical)
+    )
     
     let emptyView = UIView()
     
@@ -28,25 +31,13 @@ class SearchViewController: BaseViewController {
     
     var query = "애니"
     
-    func collectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let width = (UIScreen.main.bounds.width - 40) / 3
-        let height = (UIScreen.main.bounds.height - 100) / 4
-        layout.itemSize = CGSize(width: width, height: height)
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.scrollDirection = .vertical
-        return layout
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        callAPI()
+        callSearch()
         navigationItem.title = "SEARCH"
     }
     
-    func callAPI(){
+    func callSearch(){
         APIManager.shared.callRequest(request: .search(query: query, page: page)) { (result: Result<MovieResult, AFError>) in
             switch result {
             case .success(let value):
@@ -143,7 +134,7 @@ extension SearchViewController : UICollectionViewDelegate, UICollectionViewDataS
             if list.results.count - 2 == idx.item {
                 page += 1
                 if page <= list.total_pages{
-                    callAPI()
+                    callSearch()
                 }
             }
         }
@@ -192,7 +183,7 @@ extension SearchViewController : UISearchBarDelegate {
         if !input.isEmpty && !(input.caseInsensitiveCompare(query) == .orderedSame) {
             query = input
             page = 1
-            callAPI()
+            callSearch()
         }
     }
     
