@@ -59,7 +59,7 @@ class LatestViewController: BaseViewController {
     
 }
 
-extension LatestViewController{
+extension LatestViewController {
     func configureCollectionView(){
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -78,7 +78,9 @@ extension LatestViewController{
         latestTableView.rowHeight = Display.rowHeight
         latestTableView.separatorStyle = .none
     }
-    
+}
+
+extension LatestViewController{
     //개봉 예정
     func callUpcoming(){
         group.enter()

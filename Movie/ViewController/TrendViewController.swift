@@ -25,8 +25,7 @@ class TrendViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
-        navigationItem.title = "TREND"
-
+        configureNav()
         callGenre()
         callTrend()
         
@@ -45,6 +44,33 @@ class TrendViewController: BaseViewController {
         }
     }
     
+}
+
+extension TrendViewController {
+    func configureTableView(){
+        trendTableView.delegate = self
+        trendTableView.dataSource = self
+        trendTableView.prefetchDataSource = self
+        trendTableView.rowHeight = Display.rowHeight
+        trendTableView.separatorStyle = .none
+        trendTableView.register(TrendTableViewCell.self, forCellReuseIdentifier: TrendTableViewCell.identifier)
+    }
+    
+    func configureNav(){
+        navigationItem.title = "TREND"
+        let search = UIBarButtonItem(
+            image: Constant.Image.search,
+            style: .plain,
+            target: self,
+            action: #selector(searchButtonClicked)
+        )
+        search.tintColor = .black
+        navigationItem.rightBarButtonItem = search
+    }
+    
+    @objc func searchButtonClicked(){
+        navigationController?.pushViewController(SearchViewController(), animated: true)
+    }
 }
 
 extension TrendViewController {
@@ -103,15 +129,6 @@ extension TrendViewController {
                 }
             }
         }
-    }
-    
-    func configureTableView(){
-        trendTableView.delegate = self
-        trendTableView.dataSource = self
-        trendTableView.prefetchDataSource = self
-        trendTableView.rowHeight = Display.rowHeight
-        trendTableView.separatorStyle = .none
-        trendTableView.register(TrendTableViewCell.self, forCellReuseIdentifier: TrendTableViewCell.identifier)
     }
     
 }

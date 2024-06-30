@@ -13,7 +13,7 @@ enum Constant {
         static let heavy = UIFont.systemFont(ofSize: 22, weight: .heavy)
         static let primary = UIFont.systemFont(ofSize: 19, weight: .medium)
         static let secondary = UIFont.systemFont(ofSize: 17, weight: .medium)
-        static let tertiary = UIFont.systemFont(ofSize: 15, weight: .medium)
+        static let tertiary = UIFont.systemFont(ofSize: 14, weight: .medium)
         static let quarternary = UIFont.systemFont(ofSize: 13, weight: .medium)
     }
     
@@ -27,12 +27,16 @@ enum Constant {
         static let search = UIImage(systemName: "magnifyingglass")
         static let more = UIImage(systemName: "ellipsis.circle")
         static let trend = UIImage(systemName: "chart.line.uptrend.xyaxis")
+        static let latest = UIImage(systemName: "movieclapper")!
     }
     
     enum Color {
-        static let empty = UIColor.black.withAlphaComponent(0.5)
-        static let theme = UIColor(red: 170/255, green: 0/255, blue: 255/255, alpha: 1.0)
+        static let empty = Constant.Color.black.withAlphaComponent(0.5)
+        static let black = UIColor.black
+        static let white = UIColor.white
         static let primary = UIColor(red: 76/255, green: 76/255, blue: 76/255, alpha: 1)
         static let secondary = UIColor(red: 130/255, green: 130/255, blue: 130/255, alpha: 1)
+        static let tertiary = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+
     }
 }

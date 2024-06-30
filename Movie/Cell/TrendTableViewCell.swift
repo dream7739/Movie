@@ -65,7 +65,7 @@ class TrendTableViewCell : BaseTableViewCell {
         rateStackView.snp.makeConstraints { make in
             make.leading.bottom.equalTo(backdropImage).inset(20)
             make.width.equalTo(70)
-            make.height.equalTo(25)
+            make.height.equalTo(22)
         }
         
         logoImage.snp.makeConstraints { make in
@@ -76,17 +76,17 @@ class TrendTableViewCell : BaseTableViewCell {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(logoImage.snp.bottom).offset(12)
+            make.top.equalTo(logoImage.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview().inset(15)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalTo(titleLabel)
         }
         
         categoryLabel.snp.makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(4)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(8)
             make.leading.equalTo(descriptionLabel)
         }
         
@@ -115,21 +115,21 @@ class TrendTableViewCell : BaseTableViewCell {
         rateLabel.font = Constant.Font.tertiary
         rateLabel.textAlignment = .center
         rateLabel.textColor = .white
-        rateLabel.backgroundColor = Constant.Color.theme
+        rateLabel.backgroundColor = Constant.Color.black
         
         rateValueLabel.font = Constant.Font.tertiary
         rateValueLabel.textAlignment = .center
         rateValueLabel.backgroundColor = .white
         
-        titleLabel.font = Constant.Font.secondary
+        titleLabel.font = .boldSystemFont(ofSize: 17)
         
         logoImage.contentMode = .scaleAspectFit
 
         descriptionLabel.font = Constant.Font.tertiary
-        descriptionLabel.textColor = Constant.Color.secondary
+        descriptionLabel.textColor = Constant.Color.primary
         descriptionLabel.numberOfLines = 3
         
-        categoryLabel.font = Constant.Font.tertiary
+        categoryLabel.font = Constant.Font.quarternary
         categoryLabel.textColor = Constant.Color.secondary
 
     }

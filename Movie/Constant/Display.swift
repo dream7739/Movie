@@ -15,6 +15,4 @@ enum Display {
         case popular = "🔥 모두의 인기 컨텐츠"
         case nowplaying = "👀 현재 상영중인 영화"
     }
-    
-   
 }

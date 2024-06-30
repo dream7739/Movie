@@ -32,20 +32,9 @@ class CastViewController: BaseViewController {
         super.viewDidLoad()
         callCast()
         configureTableView()
-        
-        navigationItem.title = movie?.title
-        let more = UIBarButtonItem(image: Constant.Image.more, style: .plain, target: self, action: #selector(moreButtonClicked))
-        more.tintColor = UIColor.black
-        navigationItem.rightBarButtonItem = more
+        configureNav()
     }
-    
-    @objc func moreButtonClicked(){
-        guard let movie else { return }
-        let recommendVC = RecommendViewController()
-        recommendVC.movieId = movie.id
-        navigationController?.pushViewController(recommendVC, animated: true)
-    }
-    
+
     override func configureHierarchy(){
         view.addSubview(headerView)
         headerView.addSubview(backdropImageView)
@@ -115,6 +104,35 @@ class CastViewController: BaseViewController {
 }
 
 extension CastViewController {
+    func configureTableView(){
+        castTableView.delegate = self
+        castTableView.dataSource = self
+        castTableView.register(OverviewTableViewCell.self, forCellReuseIdentifier: OverviewTableViewCell.identifier)
+        castTableView.register(CastTableViewCell.self, forCellReuseIdentifier: CastTableViewCell.identifier)
+    }
+    
+    func configureNav(){
+        navigationItem.title = movie?.title
+        let more = UIBarButtonItem(
+            image: Constant.Image.more,
+            style: .plain,
+            target: self,
+            action: #selector(moreButtonClicked)
+        )
+        more.tintColor = Constant.Color.black
+        navigationItem.rightBarButtonItem = more
+    }
+    
+    @objc func moreButtonClicked(){
+        guard let movie else { return }
+        let recommendVC = RecommendViewController()
+        recommendVC.movieId = movie.id
+        navigationController?.pushViewController(recommendVC, animated: true)
+    }
+    
+}
+
+extension CastViewController {
     enum Section: Int, CaseIterable {
         case OverView = 0
         case Cast = 1
@@ -137,12 +155,7 @@ extension CastViewController {
         }
     }
     
-    func configureTableView(){
-        castTableView.delegate = self
-        castTableView.dataSource = self
-        castTableView.register(OverviewTableViewCell.self, forCellReuseIdentifier: OverviewTableViewCell.identifier)
-        castTableView.register(CastTableViewCell.self, forCellReuseIdentifier: CastTableViewCell.identifier)
-    }
+   
 }
 
 extension CastViewController: UITableViewDelegate, UITableViewDataSource {

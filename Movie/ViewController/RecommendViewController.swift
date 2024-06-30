@@ -104,7 +104,6 @@ extension RecommendViewController {
         }
     }
     
-    
     func configureTableView(){
         recommendTableView.delegate = self
         recommendTableView.dataSource = self
