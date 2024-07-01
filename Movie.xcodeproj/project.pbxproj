@@ -25,6 +25,8 @@
 		8817AD722C17035F0016B38E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD712C17035F0016B38E /* Constant.swift */; };
 		8817AD742C1703A30016B38E /* TrendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD732C1703A30016B38E /* TrendViewController.swift */; };
 		8817AD762C1703E30016B38E /* TrendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8817AD752C1703E30016B38E /* TrendTableViewCell.swift */; };
+		882441912C32D18800B2DE5E /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882441902C32D18800B2DE5E /* VideoViewController.swift */; };
+		882441932C32D78800B2DE5E /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882441922C32D78800B2DE5E /* Video.swift */; };
 		8846636A2C30274100E609F7 /* LatestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884663692C30274100E609F7 /* LatestViewController.swift */; };
 		8846636C2C30381200E609F7 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8846636B2C30381200E609F7 /* CategoryCollectionViewCell.swift */; };
 		8846636E2C30384D00E609F7 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8846636D2C30384D00E609F7 /* BaseCollectionViewCell.swift */; };
@@ -63,6 +65,8 @@
 		8817AD712C17035F0016B38E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		8817AD732C1703A30016B38E /* TrendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendViewController.swift; sourceTree = "<group>"; };
 		8817AD752C1703E30016B38E /* TrendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendTableViewCell.swift; sourceTree = "<group>"; };
+		882441902C32D18800B2DE5E /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		882441922C32D78800B2DE5E /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		884663692C30274100E609F7 /* LatestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestViewController.swift; sourceTree = "<group>"; };
 		8846636B2C30381200E609F7 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		8846636D2C30384D00E609F7 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				8817AD732C1703A30016B38E /* TrendViewController.swift */,
 				881180172C2954EB00BED01F /* MovieTabBarController.swift */,
 				881180202C29854B00BED01F /* RecommendViewController.swift */,
+				882441902C32D18800B2DE5E /* VideoViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -165,6 +170,7 @@
 				8817AD672C16FE860016B38E /* Movie.swift */,
 				8811801C2C29696100BED01F /* Genre.swift */,
 				88CE85702C29A46F000831E2 /* Image.swift */,
+				882441922C32D78800B2DE5E /* Video.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -308,6 +314,7 @@
 				884663722C30430F00E609F7 /* UIButton.Configuration+Extension.swift in Sources */,
 				88B1A6BC2C1710FE00E9D6A9 /* CastViewController.swift in Sources */,
 				88B1A6C02C17221700E9D6A9 /* Cast.swift in Sources */,
+				882441912C32D18800B2DE5E /* VideoViewController.swift in Sources */,
 				881180182C2954EB00BED01F /* MovieTabBarController.swift in Sources */,
 				88D37FA42C31610400C6D35C /* CustomLayout.swift in Sources */,
 				88B45B8E2C2AA63D0084BE52 /* RecommendTableViewCell.swift in Sources */,
@@ -315,6 +322,7 @@
 				8817AD432C16FC870016B38E /* AppDelegate.swift in Sources */,
 				8846636E2C30384D00E609F7 /* BaseCollectionViewCell.swift in Sources */,
 				881180212C29854B00BED01F /* RecommendViewController.swift in Sources */,
+				882441932C32D78800B2DE5E /* Video.swift in Sources */,
 				884663702C30410800E609F7 /* Display.swift in Sources */,
 				8817AD642C16FE540016B38E /* APIKey.swift in Sources */,
 				88B45B932C2ABA700084BE52 /* BaseViewController.swift in Sources */,

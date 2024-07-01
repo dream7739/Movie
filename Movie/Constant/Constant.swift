@@ -28,6 +28,7 @@ enum Constant {
         static let more = UIImage(systemName: "ellipsis.circle")
         static let trend = UIImage(systemName: "chart.line.uptrend.xyaxis")
         static let latest = UIImage(systemName: "movieclapper")!
+        static let play = UIImage(named: "play")!
     }
     
     enum Color {

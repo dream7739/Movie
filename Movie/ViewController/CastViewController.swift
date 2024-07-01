@@ -20,6 +20,8 @@ class CastViewController: BaseViewController {
     
     let posterImageView = UIImageView()
     
+    let playButton = UIButton()
+    
     let castTableView = UITableView(frame: .zero, style: .plain)
     
     var movie: Movie?
@@ -40,6 +42,7 @@ class CastViewController: BaseViewController {
         headerView.addSubview(backdropImageView)
         headerView.addSubview(titleLabel)
         headerView.addSubview(posterImageView)
+        headerView.addSubview(playButton)
         
         view.addSubview(castTableView)
     }
@@ -48,7 +51,7 @@ class CastViewController: BaseViewController {
         headerView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(200)
+            make.height.equalTo(300)
         }
         
         backdropImageView.snp.makeConstraints { make in
@@ -66,6 +69,11 @@ class CastViewController: BaseViewController {
             make.height.equalTo(100)
         }
         
+        playButton.snp.makeConstraints { make in
+            make.size.equalTo(64)
+            make.center.equalTo(headerView.safeAreaLayoutGuide)
+        }
+        
         castTableView.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom)
             make.horizontalEdges.equalToSuperview()
@@ -78,20 +86,8 @@ class CastViewController: BaseViewController {
         
         view.backgroundColor = .white
         
-        titleLabel.textColor = .white
-        titleLabel.font = Constant.Font.heavy
-        titleLabel.text = movie.title
-        
-        posterImageView.contentMode = .scaleAspectFill
-        
-        backdropImageView.contentMode = .scaleToFill
+        backdropImageView.contentMode = .scaleAspectFill
         backdropImageView.clipsToBounds = true
-        
-        if let url = movie.posterURL {
-            posterImageView.kf.setImage(with: url)
-        }else{
-            posterImageView.backgroundColor = Constant.Color.empty
-        }
         
         if let url = movie.backDropURL {
             backdropImageView.kf.setImage(with: url)
@@ -99,6 +95,28 @@ class CastViewController: BaseViewController {
             backdropImageView.backgroundColor = Constant.Color.empty
         }
         
+        posterImageView.contentMode = .scaleAspectFill
+        
+        if let url = movie.posterURL {
+            posterImageView.kf.setImage(with: url)
+        }else{
+            posterImageView.backgroundColor = Constant.Color.empty
+        }
+        
+        titleLabel.textColor = .white
+        titleLabel.font = Constant.Font.heavy
+        titleLabel.text = movie.title
+        
+        playButton.setBackgroundImage(Constant.Image.play, for: .normal)
+        playButton.addTarget(self, action: #selector(playButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc
+    func playButtonClicked(){
+        guard let movie else { return }
+        let videoVC = VideoViewController()
+        videoVC.id = movie.id
+        present(videoVC, animated: true)
     }
     
 }
